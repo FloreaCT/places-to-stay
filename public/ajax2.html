@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second ajax fetching JSON !!!</title>
+</head>
+
+<body>
+    <button id="btn1">Get 1 user</button>
+    <button id="btn2">Get all users</button>
+
+    <br><br>
+    <h1>User</h1>
+    <div id="user"></div>
+
+    <br><br>
+    <h1>Users</h1>
+    <div id="users"></div>
+
+    <script>
+        document.getElementById("btn1").addEventListener('click', loadUser)
+        document.getElementById("btn2").addEventListener('click', loadUsers)
+
+        function loadUser() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:3030/accommodation/Birmingham', true)
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    console.log(this.responseText);
+                    var user = JSON.parse(this.responseText)
+
+                    var output = '';
+
+                    output += '<ul>' +
+                        '<li>ID: ' + user[0].name + '</li>' +
+                        '<li>Type: ' + user[0].type + '</li>' +
+                        '<li>Location: ' + user[0].location + '</li>' +
+                        '</ul>'
+                    document.getElementById('user').innerHTML = output;
+                }
+            }
+            xhr.send();
+        }
+
+        function loadUsers() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:3030/accommodation/Birmingham', true)
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    console.log(this.responseText);
+                    var users = JSON.parse(this.responseText)
+
+                    var output = '';
+
+                    for (var i in users) {
+                        output += '<ul>' +
+                            '<li>ID: ' + users[i].name + '</li>' +
+                            '<li>Type: ' + users[i].type + '</li>' +
+                            '<li>Location: ' + users[i].location + '</li>' +
+                            '</ul>'
+                    }
+                    document.getElementById('users').innerHTML = output;
+                }
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>
+
+.bindPopup('
+<div class="centerSmall"><b><h4>' + results[i].name + '</h4></b>' + '' + results[i].description + '</div>' + '<input type="hidden" id="accID" name="accID" value="' + results[i].id + '">
+<div class="centerSmall">
+    <div id="myModal" class="modal custom">
+        <div class="modal-content"><span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+    </div><button id="' + results[i].id + '">Open Modal</button></div>
+<script>
+    var modal = document.getElementById("myModal");
+    document.write(document.getElementById("myModal"));
+    var btn = document.getElementById("' + results[i].id + '");
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>').openPopup();
