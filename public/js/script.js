@@ -2,7 +2,6 @@ async function ajaxSearch(accommodation, accType) {
     try {
         // Send a request to our remote URL
         const response = await fetch(`http://localhost:3030/accommodation/${accommodation}/${accType}`);
-
         // Parse the JSON.
         const results = await response.json();
 
@@ -16,7 +15,7 @@ async function ajaxSearch(accommodation, accType) {
             for (i in results) {
                 if (results[i].type === accType || accType === "Any") {
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
-                        .bindPopup('<b><h4>' + results[i].name + '</h4></b>' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><div class="centerSmall"><label for="npeople">Number of persons</label><input type="text" class="form-control" id="npeople" name="npeople" placeholder="0" required> <input class="form-control" type="date" name="begin_at" id="begin_at" required> </div><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div></form>').openPopup();
+                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 2rem; color: green"></div><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div></form>').on('click', checkAvailability);
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
                     alert("No accommodation found")
@@ -64,9 +63,6 @@ async function loadTypes() {
         alert(`There was an error: ${e}`);
     }
 }
-
-$('#myModal').modal('show');
-// www.jquery2dotnet.com
 
 window.onload = function() {
     loadTypes();

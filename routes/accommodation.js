@@ -1,12 +1,8 @@
 const express = require('express');
-const initPassportLocal = require('../controllers/passport/passportLocal')
 const locationController = require('../controllers/locationController')
 const db = require('../config/session')
 const passport = require('passport')
 const models = require('../models')
-
-// Initialize passport
-initPassportLocal()
 
 // Initialize all web routes
 const router = express.Router();
@@ -37,7 +33,11 @@ module.exports = {
 
         })
 
+        router.post("/availability/:accID", locationController.availability)
+        router.post("/availability/:accID/:date", locationController.availableSpace)
+
         router.post("/book", locationController.book)
+
 
         return app.use("/", router)
     }

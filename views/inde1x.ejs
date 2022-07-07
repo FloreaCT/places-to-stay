@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <h1>Hello, world!</h1>
+
+    <div class="md-form md-outline input-with-post-icon datepicker">
+        <input placeholder="Select date" type="text" id="datepicker" class="form-control">
+        <label for="example">Try me...</label>
+        <i class="fas fa-calendar input-prefix" tabindex=0></i>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- <script>
+        $(function() {
+            $("#datepicker").datepicker();
+        });
+    </script> -->
+    <script>
+        var availableDates = ["2022-07-07", "2020-01-10", "2020-01-14"];
+
+        $('#datepicker').datepicker({
+            dateFormat: 'DD/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-50:+10",
+            clickInput: true,
+            beforeShowDay: function(d) {
+                var year = d.getFullYear(),
+                    month = ("0" + (d.getMonth() + 1)).slice(-2),
+                    day = ("0" + (d.getDate())).slice(-2);
+
+                var formatted = year + '-' + month + '-' + day;
+
+                if ($.inArray(formatted, availableDates) != -1) {
+                    return [true, "", "Available"];
+                } else {
+                    return [false, "", "unAvailable"];
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

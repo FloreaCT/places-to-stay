@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notEmpty: true
+                notEmpty: true,
             }
         }
 
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'acc_dates',
         timestamps: false,
         createdAt: false,
-        updatedAt: false
+        updatedAt: false,
     });
     return acc_dates;
 };

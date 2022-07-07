@@ -29,6 +29,7 @@ const myDatabase = new Sequelize(
 const sessionStore = new SequelizeStore({
     db: myDatabase
 })
+
 const configSession = (app) => {
     app.use(
         session({
@@ -46,7 +47,6 @@ const configSession = (app) => {
         })
     );
 }
-
 
 // Create db session
 sessionStore.sync()

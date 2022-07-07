@@ -1,6 +1,27 @@
+.alert-danger {
+    text-align: center;
+    color: red;
+    margin: auto;
+    width: 25%;
+    border: 5px solid #FFFF00;
+    border-radius: 5px;
+    padding: 10px;
+    display: none
+}
+
+.visible {
+    display: block
+}
+
+.main-container {
+    width: 25%;
+}
+
+.invisible {}
+
 .center {
     margin: auto;
-    width: 50%;
+    width: 25%;
     padding: 10px;
     text-align: center;
 }
@@ -20,9 +41,9 @@
 }
 
 #map {
-    margin-top: 100px;
+    margin-top: 10px;
     width: 100%;
-    height: 650px;
+    height: 800px;
     border: 1px solid #AAA;
     z-index: 1;
 }
@@ -32,7 +53,7 @@
 }
 
 .leaflet-popup-content {
-    width: 200px;
+    width: 250px;
 }
 
 
@@ -624,15 +645,15 @@ xsigin/signup popup
 }
 
 .cd-form label.cd-username {
-    background-image: url("../img/cd-icon-username.svg");
+    background-image: url("/images/cd-icon-username.png");
 }
 
 .cd-form label.cd-email {
-    background-image: url("../img/cd-icon-email.svg");
+    background-image: url("/images/cd-icon-email.png");
 }
 
 .cd-form label.cd-password {
-    background-image: url("../img/cd-icon-password.svg");
+    background-image: url("/images/cd-icon-password.png");
 }
 
 .cd-form input {
@@ -812,7 +833,7 @@ xsigin/signup popup
     height: 40px;
     right: 0;
     top: -40px;
-    background: url("../img/cd-icon-close.svg") no-repeat center center;
+    background: url("/images/cd-icon-close.png") no-repeat center center;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;

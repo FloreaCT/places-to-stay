@@ -9,19 +9,19 @@ let LocalStrategy = passportLocal.Strategy
 let initPassportLocal = () => {
     // Check if email or password exists
     passport.use(new LocalStrategy({
-            usernameField: "email",
-            passwordField: "password",
+            usernameField: "loginUser",
+            passwordField: "loginPassword",
             passReqToCallback: true
-        }, async(req, email, password, done) => {
+        }, async(req, user, password, done) => {
             try {
-                await loginService.findUserByEmail(email)
+                await loginService.findUserByUser(user)
                     .then(async(user) => {
-                        if (!user) return done(null, false, req.flash("errors", "User not found!"))
+                        if (!user) return done(null, false, req.flash("error", "User not found!"))
                         let message = await loginService.comparePassword(password, user)
                         if (message === true) {
                             return done(null, user, null)
                         } else {
-                            return done(null, false, req.flash("errors", message))
+                            return done(null, false, req.flash("error", "Password is incorrect"))
                         }
                     }).catch(err => {
 
@@ -36,10 +36,12 @@ let initPassportLocal = () => {
 }
 
 passport.serializeUser((user, done) => {
+    console.log("serialized");
     return done(null, user.id)
 })
 
 passport.deserializeUser(async(id, done) => {
+    console.log("deserialized");
     await loginService.findUserById(id).then(user => {
         return done(null, user)
     }).catch(error => {
