@@ -38,6 +38,7 @@ function openLoginModal() {
 
 }
 
+
 function openRegisterModal() {
     showRegisterForm();
     setTimeout(function() {
@@ -68,4 +69,26 @@ function shakeModal() {
     setTimeout(function() {
         $('#loginModal .modal-dialog').removeClass('shake');
     }, 1000);
+}
+
+/* Credit card modal */
+
+function showCreditCard() {
+    $('#creditCard .registerBox').fadeOut('fast', function() {
+        $('.creditCard').fadeIn('fast');
+        $('.register-footer').fadeOut('fast', function() {
+            $('.login-footer').fadeIn('fast');
+        });
+
+        $('.modal-title').html('Credit Card');
+    });
+    $('.error').removeClass('alert alert-danger').html('');
+}
+
+function openCreditCard() {
+    showCreditCard();
+    setTimeout(function() {
+        $('#creditCard').modal('show');
+    }, 230);
+
 }

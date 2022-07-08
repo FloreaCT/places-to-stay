@@ -1,3 +1,8 @@
+.formLogout {
+    display: inline-block;
+    float: right;
+}
+
 .alert-danger {
     text-align: center;
     color: red;
@@ -17,13 +22,28 @@
     width: 25%;
 }
 
-.invisible {}
+.invisible {
+    display: none
+}
 
 .center {
     margin: auto;
     width: 25%;
     padding: 10px;
     text-align: center;
+}
+
+.logo {
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+}
+
+.logo:first-child {
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+    margin: 10px 0 0 10px;
 }
 
 .centerSmall {
@@ -411,7 +431,7 @@ header[role=banner]::after {
     margin-right: 5%;
     width: 44px;
     height: 100%;
-    background: url("../img/cd-icon-menu.svg") no-repeat center center;
+    background: url("images/cd-icon-menu.svg") no-repeat center center;
     cursor: pointer;
 }
 

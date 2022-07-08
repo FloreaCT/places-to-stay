@@ -2263,7 +2263,7 @@ textarea.input-lg {
 
 .btn:hover,
 .btn:focus {
-    color: #333333;
+    color: #00bbff;
     text-decoration: none;
 }
 
@@ -5979,15 +5979,14 @@ button.close {
 }
 
 .modal {
-    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: 1040;
     display: none;
-    overflow: auto;
-    overflow-y: scroll;
+    overflow: visible;
+    overflow-y: visible;
 }
 
 .modal.fade .modal-dialog {
@@ -6010,7 +6009,7 @@ button.close {
     position: relative;
     z-index: 1050;
     width: auto;
-    padding: 10px;
+    /* padding: 10px; */
     margin-right: auto;
     margin-left: auto;
 }
@@ -6110,8 +6109,6 @@ button.close {
 @media screen and (min-width: 768px) {
     .modal-dialog {
         width: 600px;
-        padding-top: 30px;
-        padding-bottom: 30px;
     }
     .modal-content {
         -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);

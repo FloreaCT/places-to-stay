@@ -1,5 +1,6 @@
 const express = require('express');
 const locationController = require('../controllers/locationController')
+const paymentController = require('../controllers/paymentController')
 const db = require('../config/session')
 const passport = require('passport')
 const models = require('../models')
@@ -35,6 +36,7 @@ module.exports = {
 
         router.post("/availability/:accID", locationController.availability)
         router.post("/availability/:accID/:date", locationController.availableSpace)
+        router.post("/checkCreditCard", paymentController.checkCreditCard)
 
         router.post("/book", locationController.book)
 

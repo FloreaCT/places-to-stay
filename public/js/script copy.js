@@ -141,7 +141,9 @@ function availableSpace() {
     })
 }
 
-function cardChecker(response) {
+async function checkCCDetails(response) {
+
+    console.log('i am inside babe');
 
     Stripe.setPublishableKey('pk_test_9D43kM3d2vEHZYzPzwAblYXl');
 
@@ -149,6 +151,7 @@ function cardChecker(response) {
 
     // check for any empty inputs
     function findEmpty() {
+        console.log('i go in findEmpty');
         var emptyText = $('#form-container input').filter(function() {
 
             return $(this).val == null;
@@ -161,6 +164,7 @@ function cardChecker(response) {
 
     // check for card type and display corresponding icon
     function checkCardType() {
+        console.log('i go in checkCardType');
         cardNumber = $('#card-number').val();
         var cardType = Stripe.card.cardType(cardNumber);
         switch (cardType) {
@@ -182,11 +186,7 @@ function cardChecker(response) {
         }
     }
 
-    // check card type on card number input blur 
-    $('#card-number').blur(function(event) {
-        event.preventDefault();
-        checkCardType();
-    });
+    checkCardType();
 
     // get each input value and use Stripe to determine whether they are valid
     var cardNumber = $('#card-number').val();
@@ -194,7 +194,9 @@ function cardChecker(response) {
     var expYear = $('#card-year').val();
     var cardCVC = $('#card-cvc').val();
     var cardHolder = $('#card-holder').val();
-    event.preventDefault();
+
+
+
 
     // alert the user if any fields are missing
     if (!cardNumber || !cardCVC || !cardHolder || !expMonth || !expYear) {
@@ -208,42 +210,30 @@ function cardChecker(response) {
 
         const result = response
 
-        // alert the user if any fields are invalid
-        if (result === "exp" || result === "number" || result === "cvv") {
-            $('#form-errors').css('display', 'block');
-            $('#form-errors').removeClass('hidden')
-            if (result === "number") {
-                $('#card-error').text('Invalid credit card number.');
-            } else if (result === "exp") {
-                $('#card-error').text('Invalid expiration date.')
-            } else if (result === "cvv") {
-                $('#card-error').text('Invalid CVC code.')
+        checkInfo()
 
+        function checkInfo() {
+            // alert the user if any fields are invalid
+            if (result === "exp" || result === "number" || result === "cvv") {
+                $('#form-errors').css('display', 'block');
+                if (result === "number") {
+                    $('#card-error').text('Invalid credit card number.');
+                } else if (result === "exp") {
+                    $('#card-error').text('Invalid expiration date.')
+                } else if (result === "cvv") {
+                    $('#card-error').text('Invalid CVC code.')
+
+                }
+
+            } else {
+                $('#card-success').removeClass('hidden');
+                return { cardNumber, cardHolder, cardYear, cardMonth, cardCVC }
             }
-
-        } else {
-            $('#card-success').removeClass('hidden');
-            $('#form-errors').css('display', 'none');
-            setTimeout(function() {
-                $('#card-success').addClass('hidden');
-                $('#creditCard').modal('hide');
-                $('#creditCard').on('hidden.bs.modal', function(e) {
-                        $(this)
-                            .find("input,textarea,select")
-                            .val('')
-                            .end()
-                    })
-                    .val('')
-                    .end()
-            }, 2000)
-
-            return { cardNumber, cardHolder, cardYear, cardMonth, cardCVC }
         }
     }
 }
 
 
-// $(document).ready(cardChecker);
 
 document.addEventListener(
     "click",

@@ -7,6 +7,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const configSession = require('./config/session');
 const passport = require('passport');
+const valid = require('card-validator')
 const cors = require('cors')
 const app = express()
     // const path = require('path')

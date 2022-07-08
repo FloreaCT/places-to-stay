@@ -20,34 +20,38 @@ const findAllTypes = function(req, res) {
 }
 
 const book = async function(req, res, next) {
-    const time = req.body.begin_at;
+    const time = req.body[1].begin_at;
+    console.log(req.body[1]);
     const newTime = time.split('/').reverse().join('/').replace('/', "").replace('/', "").slice(2, 8);
 
     try {
         await models.acc_dates.decrement({
-            availability: `${req.body.npeople}`
+            availability: `${req.body[1].npeople}`
         }, {
             where: {
-                accID: req.body.accID,
+                accID: req.body[1].accID,
                 thedate: newTime
             }
         }).then(async(result) => {
+            console.log(result[0][1]);
             if (result[0][1] == 0) {
                 res.write('Something went wrong, please contact the administrator at admin@placestostay.co.uk')
                 res.end()
+            } else {
+
+                await models.acc_bookings.create({
+                    accID: req.body[1].accID,
+                    thedate: req.body[1].begin_at.replace(/\D/g, ''),
+                    npeople: req.body[1].npeople,
+                    username: req.body[1].username
+                }).then((result) => {
+
+                    res.write(`Booking successful! See you soon!`)
+                    res.end()
+
+                })
             }
 
-            await models.acc_bookings.create({
-                accID: req.body.accID,
-                thedate: req.body.begin_at.replace(/\D/g, ''),
-                npeople: req.body.npeople,
-                username: "Admin"
-            }).then((result) => {
-                console.log("these are the new results", result);
-                res.write(`Booking successful! See you soon!`)
-                res.end()
-
-            })
         })
     } catch (err) {
         return res.write("This is scandalous! We never got this error: ", err);
@@ -58,8 +62,7 @@ const availability = async function(req, res, next) {
     await models.acc_dates.findAll({
         where: {
             accID: req.params.accID
-        },
-        attributes: ["thedate"]
+        }
     }).then((result) => {
         res.send(result)
     })
