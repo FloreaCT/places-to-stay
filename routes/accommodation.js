@@ -12,7 +12,12 @@ module.exports = {
     initAllAccRoute(app) {
 
         router.get('/accommodation/:location/:typeOfAccommodation', (req, res) => {
-            if (req.params.typeOfAccommodation === "Any") {
+            if (req.params.location === 'all') {
+                models.accommodation.findAll().then((results) => {
+                    res.json(results)
+                })
+
+            } else if (req.params.typeOfAccommodation === "Any") {
                 models.accommodation.findAll({
                     where: {
                         location: `${req.params.location}`,

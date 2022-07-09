@@ -23,14 +23,15 @@ module.exports = {
         })
 
         router.get('/accommodation', (req, res) => {
+            const isAuth = req.isAuthenticated()
             models.accommodation.findAll().then((results) => {
                 res.json(results);
             })
         })
 
-        router.get("/error", (req, res) => {
-            res.render("error.ejs")
-        })
+        // router.get("/error", (req, res) => {
+        //     res.render("error.ejs")
+        // })
 
         router.post("/login", function(req, res, next) {
             passport.authenticate('local', {
@@ -46,7 +47,10 @@ module.exports = {
                     return next(err);
                 }
                 if (!user) {
-                    return res.render('404.ejs');
+                    const isAuth = req.isAuthenticated()
+                    req.session.user = req.user;
+                    const theuser = req.user
+                    return res.json(user)
                 }
                 req.logIn(user, function(err) {
                     if (err) {
@@ -56,18 +60,24 @@ module.exports = {
                     const isAuth = req.isAuthenticated()
                     req.session.user = req.user;
                     const theuser = req.user
-                    res.render('index.ejs', { isAuth: isAuth, theuser: theuser })
+                    res.json(user)
                 });
             })(req, res, next);
         });
 
         router.post('/logout', authController.postLogOut)
 
-        app.use(function(req, res, next) {
-            res.locals.success_messages = req.flash('success_messages');
-            res.locals.error_messages = req.flash('error_messages');
-            next();
+        router.get("*", function(req, res) {
+            const results = locationController.findAllAccommodations;
+            const isAuth = req.isAuthenticated()
+            res.status(404).render('index.ejs', { isAuth: isAuth, results: results });
         });
+
+        // app.use(function(req, res, next) {
+        //     res.locals.success_messages = req.flash('success_messages');
+        //     res.locals.error_messages = req.flash('error_messages');
+        //     next();
+        // });
 
         return app.use("/", router)
     }

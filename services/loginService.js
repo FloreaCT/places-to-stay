@@ -32,7 +32,6 @@ let findUserByUser = (loginUser) => {
             if (!user) {
                 reject(`${loginUser} is not in our database`)
             } else {
-
                 resolve(user)
             }
         } catch (e) {

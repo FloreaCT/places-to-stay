@@ -28,91 +28,97 @@
 
 <body>
 
-    <%- include('partials/navbarUser.ejs') %>
+    <% if (messages.errors) { %>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <%- messages.errors %>
+        </div>
+        <%}%>
 
+            <%- include('partials/navbarUser.ejs') %>
 
-        <div class="modal fade login" id="creditCard">
-            <div class="modal-dialog login animated">
-                <div id="card-success" class="hidden">
-                    <i class="fa fa-check"></i>
-                    <p>Payment Successful!</p>
-                </div>
-                <div id="form-errors" class="hidden">
-                    <i class="fa fa-exclamation-triangle"></i>
-                    <p id="card-error">Card error</p>
-                </div>
-
-                <div id="form-container"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <div id="card-front">
-                        <div id="shadow"></div>
-
-                        <div id="image-container">
-                            <span id="amount">Your credit card will be debited: <strong>£99</strong></span>
-                            <span id="card-image">  </span>
+                <div class="modal fade login" id="creditCard">
+                    <div class="modal-dialog login animated">
+                        <div id="card-success" class="hidden">
+                            <i class="fa fa-check"></i>
+                            <p>Payment Successful!</p>
                         </div>
-                        <!--- end card image container --->
+                        <div id="form-errors" class="hidden">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            <p id="card-error">Card error</p>
+                        </div>
 
-                        <label for="card-number">
+                        <div id="form-container"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <div id="card-front">
+                                <div id="shadow"></div>
+
+                                <div id="image-container">
+                                    <span id="amount">Your credit card will be debited: <strong>£99</strong></span>
+                                    <span id="card-image">  </span>
+                                </div>
+                                <!--- end card image container --->
+
+                                <label for="card-number">
               Card Number
             </label>
-                        <input type="text" id="card-number" placeholder="1234 5678 9101 1112" maxlength="16">
-                        <div id="cardholder-container">
-                            <label for="card-holder">Card Holder
+                                <input type="text" id="card-number" placeholder="1234 5678 9101 1112" maxlength="16">
+                                <div id="cardholder-container">
+                                    <label for="card-holder">Card Holder
             </label>
-                            <input type="text" id="card-holder" placeholder="e.g. John Doe" />
-                        </div>
-                        <!--- end card holder container --->
-                        <div id="exp-container">
-                            <label for="card-exp">
+                                    <input type="text" id="card-holder" placeholder="e.g. John Doe" />
+                                </div>
+                                <!--- end card holder container --->
+                                <div id="exp-container">
+                                    <label for="card-exp">
                 Expiration
               </label>
-                            <input id="card-month" type="text" placeholder="MM" maxlength="2">
-                            <input id="card-year" type="text" placeholder="YY" maxlength="2">
-                        </div>
-                        <div id="cvc-container">
-                            <label for="card-cvc"> CVC/CVV</label>
-                            <input id="card-cvc" placeholder="XXX-X" type="text" minlength="3" maxlength="4">
-                            <p>Last 3 or 4 digits</p>
-                        </div>
-                        <!--- end CVC container --->
-                        <!--- end exp container --->
-                    </div>
-                    <!--- end card front --->
-                    <div id="card-back">
-                        <div id="card-stripe">
-                        </div>
+                                    <input id="card-month" type="text" placeholder="MM" maxlength="2">
+                                    <input id="card-year" type="text" placeholder="YY" maxlength="2">
+                                </div>
+                                <div id="cvc-container">
+                                    <label for="card-cvc"> CVC/CVV</label>
+                                    <input id="card-cvc" placeholder="XXX-X" type="text" minlength="3" maxlength="4">
+                                    <p>Last 3 or 4 digits</p>
+                                </div>
+                                <!--- end CVC container --->
+                                <!--- end exp container --->
+                            </div>
+                            <!--- end card front --->
+                            <div id="card-back">
+                                <div id="card-stripe">
+                                </div>
 
-                    </div>
-                    <!--- end card back --->
-                    <input type="text" id="card-token" />
-                    <button type="button" id="card-btn" onclick="payment()">Submit</button>
+                            </div>
+                            <!--- end card back --->
+                            <input type="text" id="card-token" />
+                            <button type="button" id="card-btn" onclick="payment()">Submit</button>
 
+                        </div>
+                        <!--- end form container --->
+                    </div>
                 </div>
-                <!--- end form container --->
-            </div>
-        </div>
 
-        <!--- end of modal container-->
+                <!--- end of modal container-->
 
-        <div id="map"></div>
+                <div id="map"></div>
 
 
-        <br><br>
+                <br><br>
 
 
 
-        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
-        <!-- <script type="text/javascript">
+                <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+                <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
+                <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
+                <!-- <script type="text/javascript">
             $(document).ready(function() {
                 openLoginModal();
             });
         </script> -->
-        <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
-        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-        <script src="js/script.js"></script>
+                <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
+                <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+                <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+                <script src="js/script.js"></script>
 </body>
 <script type="text/javascript">
     var map = L.map('map').setView([51.505, -0.09], 13);
@@ -147,9 +153,8 @@
 </script>
 <script type="text/javascript">
     function bookAccommodation() {
-        var isAuth = '<%= isAuth %>'
 
-        if (isAuth === 'false') {
+        if (!sessionStorage.getItem('username')) {
             document.getElementById('loginError').setAttribute('class', 'alert-danger visible')
             document.getElementById('loginError').innerHTML = `<h1>Sorry, you need to be logged in order to book.</h1>`
             openLoginModal()
@@ -187,35 +192,71 @@
     }
 </script>
 <script>
-    // I AM USING SERVER SIDE FOR NOW
-    // function loginFunction() {
-    //     let loginObj = {
-    //         loginUser: document.getElementById("loginUser").value,
-    //         loginPassword: document.getElementById("loginPassword").value,
-    //     }
+    function loginFunction() {
 
-    //     $.ajax({
-    //         type: "post",
-    //         url: "/login",
-    //         data: JSON.stringify(loginObj),
-    //         contentType: "application/json; charset=utf-8",
-    //         traditional: true,
-    //         success: function(msg) {
-    //             console.log('Success!!');
-    //             console.log(msg); // loginMessage from your code
-    //         },
-    //         error: function() {
-    //             console.log('Error!!');
-    //         }
-    //     })
-    // }
+
+        let loginObj = {
+            loginUser: document.getElementById("loginUser").value,
+            loginPassword: document.getElementById("loginPassword").value,
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:3030/login",
+            data: JSON.stringify(loginObj),
+            contentType: "application/json; charset=utf-8",
+            async: true,
+            success: function(msg) {
+                if (msg === false) {
+                    var element = document.getElementById('loginError')
+                    element.style.display = "block"
+                    element.innerHTML = '<h2>User or password incorrect!<h2>'
+                    $('#loginError').delay(1000).fadeOut(1000)
+                        .promise().done(function() {
+                            element.innerHTML = '<a href="#" class="close" id="loginError">×</a>'
+                        });
+                } else {
+
+                    let username = sessionStorage.setItem('username', msg.username)
+                    let access = sessionStorage.setItem('access', msg.admin)
+
+                    document.getElementById('loggedInAs').innerHTML += username
+                    var navNotLogged = document.getElementById('navNotLogged')
+                    var navLogged = document.getElementById('navLogged')
+
+                    $('.modal').modal('hide')
+
+                    $("#navNotLogged").fadeOut(2000).promise().done(function() {
+                        document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
+                        navLogged.style.display = 'block';
+                    })
+
+
+
+
+                }
+
+            },
+            error: function() {
+                console.log('Error!!');
+            }
+        })
+    }
 
     function logout() {
+
+        sessionStorage.clear()
+
+        var navNotLogged = document.getElementById('navNotLogged')
+        var navLogged = document.getElementById('navLogged')
+        $("#navLogged").fadeOut(2000).promise().done(function() {
+            navNotLogged.style.display = 'block'
+        })
 
         const url = "http://localhost:3030/logout"
 
         let xhr = new XMLHttpRequest()
-
         xhr.open('POST', url, true)
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
         xhr.send();

@@ -6,12 +6,14 @@
 .alert-danger {
     text-align: center;
     color: red;
-    margin: auto;
-    width: 25%;
+    margin: 15px auto;
+    width: 75%;
     border: 5px solid #FFFF00;
     border-radius: 5px;
     padding: 10px;
-    display: none
+    display: none;
+    z-index: 1060;
+    position: relative;
 }
 
 .visible {

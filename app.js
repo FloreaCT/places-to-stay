@@ -42,12 +42,6 @@ app.use(passport.session())
 initAllAccRoute(app);
 initAllWebRoute(app);
 
-
-// Handle 404
-app.use(function(req, res) {
-    res.status(404).render('404');
-});
-
 const port = process.env.PORT || 3030;
 
 app.listen(port,

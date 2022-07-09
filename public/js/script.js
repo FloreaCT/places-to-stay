@@ -1,5 +1,8 @@
 async function ajaxSearch(accommodation, accType) {
     try {
+        if (!accommodation) {
+            accommodation = 'all'
+        }
         // Send a request to our remote URL
         const response = await fetch(`http://localhost:3030/accommodation/${accommodation}/${accType}`);
         // Parse the JSON.
@@ -8,8 +11,19 @@ async function ajaxSearch(accommodation, accType) {
         layerGroup.clearLayers();
 
         bounds = []
+
         if (results.length === 0) {
-            alert("No accommodation found")
+            var element = document.getElementById('alertMap')
+            element.classList.remove('hidden')
+            element.innerHTML += 'No accommodation found!'
+            $('#alertMap').delay(1500).fadeOut()
+                .promise().done(function() {
+                    // element.innerHTML += '<a href="#" class="close" id="closeAlertMap">×</a>'
+                    element.style.display = null
+                    element.classList.add('hidden')
+                    element.innerHTML = '<a href="#" class="close" id="closeAlertMap">×</a>'
+                });
+
         } else {
 
             for (i in results) {
@@ -18,7 +32,13 @@ async function ajaxSearch(accommodation, accType) {
                         .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 2rem; color: green"></div><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div></form>').on('click', checkAvailability);
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
-                    alert("No accommodation found")
+                    $('#alertMap').delay(1500).fadeOut()
+                        .promise().done(function() {
+                            // element.innerHTML += '<a href="#" class="close" id="closeAlertMap">×</a>'
+                            element.style.display = null
+                            element.classList.add('hidden')
+                            element.innerHTML = '<a href="#" class="close" id="closeAlertMap">×</a>'
+                        });
                 }
             }
         }
@@ -198,7 +218,7 @@ function cardChecker(response) {
 
     // alert the user if any fields are missing
     if (!cardNumber || !cardCVC || !cardHolder || !expMonth || !expYear) {
-        console.log(cardNumber + cardCVC + cardHolder + cardMonth + cardYear);
+        // console.log(cardNumber + cardCVC + cardHolder + cardMonth + cardYear);
         $('#form-errors').addClass('hidden');
         $('#card-success').addClass('hidden');
         $('#form-errors').removeClass('hidden');
@@ -236,14 +256,12 @@ function cardChecker(response) {
                     .val('')
                     .end()
             }, 2000)
+            map.closePopup()
 
             return { cardNumber, cardHolder, cardYear, cardMonth, cardCVC }
         }
     }
 }
-
-
-// $(document).ready(cardChecker);
 
 document.addEventListener(
     "click",
@@ -259,6 +277,86 @@ document.addEventListener(
     false
 )
 
+var closeAlertMap = document.getElementById('alertMap')
+closeAlertMap.addEventListener('click', function() {
+    document.getElementById("alertMap").classList.add('hidden')
+    document.getElementById('alertMap').innerHTML = '<a href="#" class="close" id="closeAlertMap">×</a>'
+})
+
+
+var submitButton = document.getElementById('ajaxButton');
+
+submitButton.addEventListener('click', function() {
+
+    // Disable the submit button
+
+    setTimeout(function() {
+        submitButton.value = 'Search Again!'
+    }, 1601)
+    Counter(submitButton, 400)
+    submitButton.setAttribute('disabled', 'disabled');
+
+    function Counter(elem, delay) {
+        var value = 4
+        var interval;
+
+        function decrement() {
+            return value -= 1; // This 1 could be turned into a variable that allows
+            // us to count by any value we want. I'll leave that
+            // as a lesson for you !
+        }
+
+        function updateDisplay(value) {
+            if (value < 1) {
+                clearInterval(interval)
+                submitButton.removeAttribute('disabled')
+            }
+            elem.value = 'Please wait...' + parseInt(value)
+        }
+
+        function run() {
+            updateDisplay(decrement());
+        }
+
+        function start() {
+            interval = window.setInterval(run, delay);
+        }
+
+        // exports
+        // This actually creates a function that our counter can call
+        // you'll see it used below.
+        //
+        // The other functions above cannot be accessed from outside
+        // this function.
+        start();
+    }
+
+    // // Change the "Submit" text
+    // setTimeout(changeButton(3), 1000)
+    // setTimeout(changeButton(2), 2000)
+    // setTimeout(changeButton(1), 3000)
+    // setTimeout(changeButton('Search Again'), 3500)
+
+    // function changeButton(num) {
+    //     if ([1, 2, 3].includes(num)) {
+    //         console.log('got in please wait??');
+    //         submitButton.value = 'Please wait...' + `${num}`
+    //     } else if (num === 'Search Again') {
+    //         console.log("got here laos");
+    //         submitButton.value = num
+    //     } else {
+
+    //     }
+    // }
+
+}, false);
+
 window.onload = function() {
     loadTypes();
+    if (sessionStorage.getItem('username')) {
+        console.log(sessionStorage.getItem('username'));
+        document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
+        document.getElementById('navNotLogged').style.display = 'none'
+        document.getElementById('navLogged').style.display = 'block'
+    }
 };

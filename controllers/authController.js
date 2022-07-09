@@ -13,27 +13,6 @@ let getPageLogin = (req, res) => {
     });
 };
 
-let handleLogin = async(req, res) => {
-    let errorsArr = [];
-    let validationErrors = validationResult(req);
-    if (!validationErrors.isEmpty()) {
-        let errors = Object.values(validationErrors.mapped());
-        errors.forEach((item) => {
-            errorsArr.push(item.msg);
-        });
-        req.flash("errors", errorsArr);
-        return res.redirect("/login");
-    }
-
-    try {
-        await loginService.handleLogin(req.body.email, req.body.password);
-        return res.redirect("/");
-    } catch (err) {
-        req.flash("errors", err);
-        return res.redirect("/login");
-    }
-};
-
 let checkLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         return res.redirect('/404.ejs')
@@ -198,7 +177,6 @@ module.exports = {
     checkLoggedIn: checkLoggedIn,
     checkLoggedOut: checkLoggedOut,
     postLogOut: postLogOut,
-    handleLogin: handleLogin,
     getPageLogin: getPageLogin,
     checkRole: checkRole,
     checkInstitute: checkInstitute,

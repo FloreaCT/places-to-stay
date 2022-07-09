@@ -18,7 +18,8 @@ async function ajaxSearch(accommodation, accType) {
                         .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 2rem; color: green"></div><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div></form>').on('click', checkAvailability);
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
-                    alert("No accommodation found")
+                    document.getElementById('alertMap').innerHTML('No accommodation found!')
+                    document.getElementById('alertMap').removeClass('hidden')
                 }
             }
         }
@@ -143,28 +144,25 @@ function availableSpace() {
 
 async function checkCCDetails(response) {
 
-    console.log('i am inside babe');
-
     Stripe.setPublishableKey('pk_test_9D43kM3d2vEHZYzPzwAblYXl');
 
     var cardNumber, cardMonth, cardYear, cardCVC, cardHolder;
 
     // check for any empty inputs
     function findEmpty() {
-        console.log('i go in findEmpty');
+
         var emptyText = $('#form-container input').filter(function() {
 
             return $(this).val == null;
         });
 
         // add invalid class to empty inputs
-        console.log(emptyText.prevObject);
+        // console.log(emptyText.prevObject);
         emptyText.prevObject.addClass('invalid');
     }
 
     // check for card type and display corresponding icon
     function checkCardType() {
-        console.log('i go in checkCardType');
         cardNumber = $('#card-number').val();
         var cardType = Stripe.card.cardType(cardNumber);
         switch (cardType) {
