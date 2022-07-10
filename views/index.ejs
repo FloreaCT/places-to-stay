@@ -155,11 +155,17 @@
     function bookAccommodation() {
 
         if (!sessionStorage.getItem('username')) {
-            document.getElementById('loginError').setAttribute('class', 'alert-danger visible')
-            document.getElementById('loginError').innerHTML = `<h1>Sorry, you need to be logged in order to book.</h1>`
+            var loginError = document.getElementById('loginError')
+            loginError.innerHTML = `<h1>Sorry, you need to be logged in order to book.</h1>`
+            loginError.style.display = 'block'
+            $('#loginError').delay(2000).fadeOut(1000)
+                .promise().done(function() {
+                    loginError.innerHTML = '<a href="#" class="close" id="loginError">×</a>'
+
+                });
             openLoginModal()
             $('#loginModal').on('hidden.bs.modal', function() {
-                document.getElementById('loginError').setAttribute('class', 'invisible')
+                loginError.style.display = 'none'
             })
         } else {
 
@@ -177,18 +183,22 @@
                 validate()
                 openCreditCard()
             }
+
+
+        }
+    }
+
+    function validate() {
+        if (!parseInt(document.getElementById('npeople').value)) {
+            alert("Please select the number of persons")
+        } else if (parseInt(document.getElementById('npeople').value) < 0) {
+            alert(`Cannot book for ${document.getElementById('npeople').value} people. Please adjust the number of people`);
+            throw "exit"
+        } else if (parseInt(document.getElementById('npeople').value) > parseInt(document.getElementById('forMaxPeople').value)) {
+            alert('You are trying to book more people then the venue can accommodate. Please adjust the number of people or try another date.');
+            throw "exit"
         }
 
-        function validate() {
-
-            if (parseInt(document.getElementById('npeople').value) < 0) {
-                alert(`Cannot book for ${document.getElementById('npeople').value} people. Please adjust the number of people`);
-                throw "exit"
-            } else if (parseInt(document.getElementById('npeople').value) > parseInt(document.getElementById('forMaxPeople').value)) {
-                alert('You are trying to book more people then the venue can accommodate. Please adjust the number of people or try another date.');
-                throw "exit"
-            }
-        }
     }
 </script>
 <script>
@@ -211,7 +221,7 @@
                 if (msg === false) {
                     var element = document.getElementById('loginError')
                     element.style.display = "block"
-                    element.innerHTML = '<h2>User or password incorrect!<h2>'
+                    element.innerHTML = '<h2>User or password incorrect!'
                     $('#loginError').delay(1000).fadeOut(1000)
                         .promise().done(function() {
                             element.innerHTML = '<a href="#" class="close" id="loginError">×</a>'
