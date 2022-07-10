@@ -1,6 +1,6 @@
 <header role="banner">
 
-    <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray shadow-sm">
         <div class="logo">
             <a href="#">
                 <!-- Logo Image -->
@@ -30,8 +30,8 @@
                 <div class="modal-dialog login animated">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Login with</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="box">
@@ -58,19 +58,19 @@
                                         <input id="loginUser" class="form-control" type="text" placeholder="Username" name="loginUser" required>
                                         <input id="loginPassword" class="form-control" type="password" placeholder="Password" name="loginPassword" required>
                                         <input class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction()">
-
+                                        <div class="alert-danger" id="loginError" style="display: none"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="box">
                                 <div class="content registerBox" style="display:none;">
                                     <div class="form">
-                                        <form method="" html="{:multipart=>true}" data-remote="true" action="" accept-charset="UTF-8">
-                                            <input id="email" class="form-control" type="text" placeholder="Email" name="email">
-                                            <input id="password" class="form-control" type="password" placeholder="Password" name="password">
-                                            <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
-                                            <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
-                                        </form>
+
+                                        <input id="username" class="form-control" type="text" placeholder="Username" name="username" required>
+                                        <input id="password" class="form-control" type="password" placeholder="Password" name="password" required>
+                                        <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" required>
+                                        <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+
                                     </div>
                                 </div>
                             </div>
@@ -84,14 +84,14 @@
                             </div>
                             <div class="forgot register-footer" style="display:none">
                                 <span>Already have an account?</span>
-                                <a href="javascript: showLoginForm();">Login</a>
+
                             </div>
                         </div>
 
                     </div>
 
                 </div>
-                <div class="alert-danger" id="loginError" style="display: none"></div>
+
             </div>
 
         </div>
@@ -114,8 +114,8 @@
         <input type='button' id='ajaxButton' value='Search!' class="btn btn-primary" /></select>
         <br><br>
 
-        <div class="alert alert-danger alert-dismissible hidden" role="alert" id="alertMap">
-            <a href="#" class="close" id="closeAlertMap">&times;</a>
+        <div class="alert alert-danger align-items-center" role="alert" id="alertMap" style="display: none">
+            No accommodation found!
         </div>
 </div>
 </form>

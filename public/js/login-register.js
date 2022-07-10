@@ -92,3 +92,11 @@ function openCreditCard() {
     }, 230);
 
 }
+
+function openLoginModal() {
+    showLoginForm();
+    setTimeout(function() {
+        $('#loginModal').modal('show');
+    }, 230);
+
+}

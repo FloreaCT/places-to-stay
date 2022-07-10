@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <script src="js/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="js/bootstrap.js" type="text/javascript"></script>
     <script src="js/login-register.js" type="text/javascript"></script>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
@@ -17,8 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script src="https://kit.fontawesome.com/edff614c3c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/login-register.css" />
     <link rel="stylesheet" type="text/css" href="css/creditcard.css" />
 
@@ -108,8 +106,8 @@
 
 
                 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
-                <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
-                <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
                 <!-- <script type="text/javascript">
             $(document).ready(function() {
                 openLoginModal();
@@ -155,15 +153,11 @@
     function bookAccommodation() {
 
         if (!sessionStorage.getItem('username')) {
-            var loginError = document.getElementById('loginError')
-            loginError.innerHTML = `<h1>Sorry, you need to be logged in order to book.</h1>`
-            loginError.style.display = 'block'
-            $('#loginError').delay(2000).fadeOut(1000)
-                .promise().done(function() {
-                    loginError.innerHTML = '<a href="#" class="close" id="loginError">×</a>'
 
-                });
+            showError('loginError', 'Sorry, you need to be logged in order to book.')
+
             openLoginModal()
+
             $('#loginModal').on('hidden.bs.modal', function() {
                 loginError.style.display = 'none'
             })
@@ -174,12 +168,15 @@
             const npeople = document.getElementById("npeople").value
 
             if (accID.length === 0) {
-                alert('Invalid accommodation ID, please contact the administrator at admin@placestotstay.co.uk')
+
+                showError("bookError", 'Invalid accommodation ID, please contact the administrator at admin@placestotstay.co.uk')
+
             } else if (!begin_at) {
-                alert('Please select a date.')
-            } else if (npeople.length === 0) {
-                alert('Please select the number of people.')
+
+                showError("bookError", "Please select a date!")
+
             } else {
+
                 validate()
                 openCreditCard()
             }
@@ -190,12 +187,13 @@
 
     function validate() {
         if (!parseInt(document.getElementById('npeople').value)) {
-            alert("Please select the number of persons")
-        } else if (parseInt(document.getElementById('npeople').value) < 0) {
-            alert(`Cannot book for ${document.getElementById('npeople').value} people. Please adjust the number of people`);
+            showError("bookError", "Please select the number of persons")
+            throw "exit"
+        } else if (parseInt(document.getElementById('npeople').value) <= 0) {
+            showError("bookError", `Cannot book for ${document.getElementById('npeople').value} people. Please adjust the number of people`);
             throw "exit"
         } else if (parseInt(document.getElementById('npeople').value) > parseInt(document.getElementById('forMaxPeople').value)) {
-            alert('You are trying to book more people then the venue can accommodate. Please adjust the number of people or try another date.');
+            showError("bookError", 'You are trying to book more people then the venue can accommodate. Please adjust the number of people or try another date.');
             throw "exit"
         }
 
@@ -221,7 +219,7 @@
                 if (msg === false) {
                     var element = document.getElementById('loginError')
                     element.style.display = "block"
-                    element.innerHTML = '<h2>User or password incorrect!'
+                    element.innerHTML = 'User or password incorrect!'
                     $('#loginError').delay(1000).fadeOut(1000)
                         .promise().done(function() {
                             element.innerHTML = '<a href="#" class="close" id="loginError">×</a>'

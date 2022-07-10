@@ -13,39 +13,34 @@ async function ajaxSearch(accommodation, accType) {
         bounds = []
 
         if (results.length === 0) {
-            var element = document.getElementById('alertMap')
-            element.classList.remove('hidden')
-            element.innerHTML += 'No accommodation found!'
-            $('#alertMap').delay(1500).fadeOut()
-                .promise().done(function() {
-                    // element.innerHTML += '<a href="#" class="close" id="closeAlertMap">×</a>'
-                    element.style.display = null
-                    element.classList.add('hidden')
-                    element.innerHTML = '<a href="#" class="close" id="closeAlertMap">×</a>'
-                });
+
+            showError("alertMap", "No accommodation found!")
 
         } else {
 
+            function clickZoom(e) {
+                latlng = e.target.getLatLng()
+                map.setView([latlng.lat + 0.10, latlng.lng], 11);
+                checkAvailability()
+            }
             for (i in results) {
+
                 if (results[i].type === accType || accType === "Any") {
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
-                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 2rem; color: green"></div><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div></form>').on('click', checkAvailability);
+                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + '  ' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>').on('click', clickZoom);
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
-                    $('#alertMap').delay(1500).fadeOut()
-                        .promise().done(function() {
-                            // element.innerHTML += '<a href="#" class="close" id="closeAlertMap">×</a>'
-                            element.style.display = null
-                            element.classList.add('hidden')
-                            element.innerHTML = '<a href="#" class="close" id="closeAlertMap">×</a>'
-                        });
+
+                    showError("alertMap", "No accommodation found!")
                 }
             }
+
+            map.fitBounds(bounds);
         }
 
-        map.fitBounds(bounds);
 
     } catch (e) {
+        alert('This is ridiculous, we never got this error! Please contact the administrator!')
         console.log(`There was an error: ${e}`);
     }
 }
@@ -277,6 +272,14 @@ document.addEventListener(
     false
 )
 
+
+function showError(elementId, text) {
+    var element = document.getElementById(elementId)
+    element.style.display = 'block'
+    element.innerHTML = text
+    $("#" + elementId).delay(1000).fadeOut(1200)
+}
+
 var closeAlertMap = document.getElementById('alertMap')
 closeAlertMap.addEventListener('click', function() {
     document.getElementById("alertMap").classList.add('hidden')
@@ -292,8 +295,8 @@ submitButton.addEventListener('click', function() {
 
     setTimeout(function() {
         submitButton.value = 'Search Again!'
-    }, 1601)
-    Counter(submitButton, 400)
+    }, 1801)
+    Counter(submitButton, 450)
     submitButton.setAttribute('disabled', 'disabled');
 
     function Counter(elem, delay) {
