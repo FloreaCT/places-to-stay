@@ -7,7 +7,9 @@
     padding: 0;
 }
 
-.alert-warning {}
+.carouselImg {
+    height: 200px;
+}
 
 .alert-danger {
     text-align: center;
@@ -30,7 +32,7 @@
     width: 25%;
 }
 
-.invisible {
+.hidden {
     display: none
 }
 

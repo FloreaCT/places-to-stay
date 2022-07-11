@@ -11,7 +11,7 @@ async function ajaxSearch(accommodation, accType) {
         layerGroup.clearLayers();
 
         bounds = []
-
+        console.log(results.length);
         if (results.length === 0) {
 
             showError("alertMap", "No accommodation found!")
@@ -27,11 +27,11 @@ async function ajaxSearch(accommodation, accType) {
 
                 if (results[i].type === accType || accType === "Any") {
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
-                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + '  ' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>').on('click', clickZoom);
+                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + ' <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> ' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>').on('click', clickZoom);
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
 
-                    showError("alertMap", "No accommodation found!")
+
                 }
             }
 
@@ -258,6 +258,52 @@ function cardChecker(response) {
     }
 }
 
+function showError(elementId, text) {
+    var element = document.getElementById(elementId)
+    element.style.display = 'block'
+    element.innerHTML = text
+    $("#" + elementId).delay(1000).fadeOut(1200)
+}
+
+$(document).ready(function() {
+
+    $("#but_upload").click(function() {
+
+        var fd = new FormData();
+        var files = $('#file')[0].files;
+
+        // Check file selected or not
+        if (files.length > 0) {
+            fd.append('file', files[0]);
+
+            $.ajax({
+                url: 'http://localhost:3030/uploadImage',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+
+                    if (response != 0) {
+                        $("#imgPreview").attr("src", response.imagePath);
+                        $("#imgPreview").css("display", 'block');
+                        $(".preview img").show(); // Display image element
+                    } else {
+                        alert('file not uploaded');
+                    }
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Off... This is an Error and usually it doesn't happen, please contact the Administrator.")
+                }
+            });
+        } else {
+            alert("Please select a file.");
+        }
+    });
+});
+
+
 document.addEventListener(
     "click",
     function(event) {
@@ -271,14 +317,6 @@ document.addEventListener(
     },
     false
 )
-
-
-function showError(elementId, text) {
-    var element = document.getElementById(elementId)
-    element.style.display = 'block'
-    element.innerHTML = text
-    $("#" + elementId).delay(1000).fadeOut(1200)
-}
 
 var closeAlertMap = document.getElementById('alertMap')
 closeAlertMap.addEventListener('click', function() {
@@ -362,4 +400,5 @@ window.onload = function() {
         document.getElementById('navNotLogged').style.display = 'none'
         document.getElementById('navLogged').style.display = 'block'
     }
+
 };

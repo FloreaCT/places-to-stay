@@ -1,6 +1,6 @@
 const models = require("../models");
-const db = require("../config/session");
-const Sequelize = require("sequelize");
+// const db = require("../config/session");
+// const Sequelize = require("sequelize");
 
 const findAllAccommodations = function(req, res) {
     models.accommodation.findAll().then((results) => {

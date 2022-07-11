@@ -3,8 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-
-    class acc_users extends Model {
+    class acc_images extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -14,45 +13,36 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
         }
     }
-    acc_users.init({
-        username: {
+    acc_images.init({
+        accID: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        imagePath: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
         },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: true
-            }
-        },
-        admin: {
-            type: DataTypes.TINYINT,
-            allowNull: false,
-            validate: {
-                notEmpty: true
-            }
-        }
-
     }, {
         sequelize,
-        modelName: 'acc_users',
+        modelName: 'acc_images',
         timestamps: false,
         createdAt: false,
         updatedAt: false
     });
 
-    acc_users.associate = (models) => {
+    acc_images.associate = (models) => {
 
-        acc_users.hasMany(models.acc_images, {
-            as: 'images',
-            foreignKey: 'accID',
-            onDelete: 'cascade'
+        acc_images.belongsTo(models.acc_users, {
+            as: "users",
+            foreignKey: "accID"
+
         })
     }
-
-    return acc_users;
+    return acc_images;
 };

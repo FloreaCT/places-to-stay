@@ -4,6 +4,7 @@ const paymentController = require('../controllers/paymentController')
 const db = require('../config/session')
 const passport = require('passport')
 const models = require('../models')
+const imageController = require('../controllers/imageController')
 
 // Initialize all web routes
 const router = express.Router();
@@ -42,9 +43,9 @@ module.exports = {
         router.post("/availability/:accID", locationController.availability)
         router.post("/availability/:accID/:date", locationController.availableSpace)
         router.post("/checkCreditCard", paymentController.checkCreditCard)
-
         router.post("/book", locationController.book)
 
+        router.post("/uploadImage", imageController.upload.single('file'), imageController.image)
 
         return app.use("/", router)
     }
