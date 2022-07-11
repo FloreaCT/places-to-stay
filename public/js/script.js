@@ -55,7 +55,7 @@ document.getElementById('ajaxButton').addEventListener('click', () => {
 async function loadTypes() {
     try {
         // Send a request to our remote URL
-        const response = await fetch('http://localhost:3030/accommodation/');
+        const response = await fetch('/accommodation/');
 
         // Parse the JSON.
         const results = await response.json();
