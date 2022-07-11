@@ -207,7 +207,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:3030/login",
+            url: "/login",
             data: JSON.stringify(loginObj),
             contentType: "application/json; charset=utf-8",
             async: true,
@@ -258,7 +258,7 @@
             navNotLogged.style.display = 'block'
         })
 
-        const url = "http://localhost:3030/logout"
+        const url = "/logout"
 
         let xhr = new XMLHttpRequest()
         xhr.open('POST', url, true)
@@ -287,7 +287,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:3030/checkCreditCard",
+            url: "/checkCreditCard",
             data: JSON.stringify([creditCard, bookObj]),
             contentType: "application/json; charset=utf-8",
             async: true,

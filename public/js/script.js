@@ -4,7 +4,7 @@ async function ajaxSearch(accommodation, accType) {
             accommodation = 'all'
         }
         // Send a request to our remote URL
-        const response = await fetch(`http://localhost:3030/accommodation/${accommodation}/${accType}`);
+        const response = await fetch(`/accommodation/${accommodation}/${accType}`);
         // Parse the JSON.
         const results = await response.json();
 
@@ -85,7 +85,7 @@ function checkAvailability() {
     const enabled_days = []
     $.ajax({
         type: "POST",
-        url: "http://localhost:3030/availability/" + accID,
+        url: "/availability/" + accID,
         dataType: "JSON",
         success: function(response) {
 
@@ -142,7 +142,7 @@ function availableSpace() {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:3030/availability/" + accID + "/" + newDate,
+        url: "/availability/" + accID + "/" + newDate,
         dataType: "JSON",
         success: function(response) {
 
@@ -277,7 +277,7 @@ $(document).ready(function() {
             fd.append('file', files[0]);
 
             $.ajax({
-                url: 'http://localhost:3030/uploadImage',
+                url: '/uploadImage',
                 type: 'post',
                 data: fd,
                 contentType: false,
