@@ -29,9 +29,11 @@ module.exports = {
             })
         })
 
-        // router.get("/error", (req, res) => {
-        //     res.render("error.ejs")
-        // })
+        router.get("*", function(req, res) {
+            const results = locationController.findAllAccommodations;
+            const isAuth = req.isAuthenticated()
+            res.status(404).render('index.ejs', { isAuth: isAuth, results: results });
+        });
 
         router.post("/login", function(req, res, next) {
             passport.authenticate('local', {
@@ -65,13 +67,13 @@ module.exports = {
             })(req, res, next);
         });
 
+        router.post('/register', authController.register)
+
         router.post('/logout', authController.postLogOut)
 
-        router.get("*", function(req, res) {
-            const results = locationController.findAllAccommodations;
-            const isAuth = req.isAuthenticated()
-            res.status(404).render('index.ejs', { isAuth: isAuth, results: results });
-        });
+
+
+
 
         // app.use(function(req, res, next) {
         //     res.locals.success_messages = req.flash('success_messages');

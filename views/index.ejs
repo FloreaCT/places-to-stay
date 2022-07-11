@@ -25,8 +25,6 @@
 
 <body>
 
-
-
     <%- include('partials/navbarUser.ejs') %>
 
         <div class="modal fade login" id="creditCard">
@@ -64,7 +62,7 @@
                             <div id="exp-container">
                                 <label for="card-exp">
                 Expiration
-              </label>
+              </label><br>
                                 <input id="card-month" type="text" placeholder="MM" maxlength="2">
                                 <input id="card-year" type="text" placeholder="YY" maxlength="2">
                             </div>
@@ -94,22 +92,13 @@
 
         <!--- end of modal container-->
 
-        <div id="map"></div>
+        <div id="map" class="random"></div>
 
 
         <br><br>
 
 
-
-        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-        <!-- <script type="text/javascript">
-            $(document).ready(function() {
-                openLoginModal();
-            });
-        </script> -->
-        <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script src="js/script.js"></script>
@@ -136,10 +125,21 @@
     var layerGroup = L.layerGroup().addTo(map);
 
     function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent('Nothing here ')
-            .openOn(map);
+
+        console.log(sessionStorage.getItem('access'));
+        if (sessionStorage.getItem('access') === '1') {
+
+            popup.setLatLng(e.latlng)
+                .setContent('<div class="centerSmall"> <button type="button" class="btn btn-outline-primary"> <i class="fa-solid fa-plus"></i> Accommodation </button></div> ')
+                .openOn(map);
+        } else {
+            popup
+                .setLatLng(e.latlng)
+                .setContent('Nothing here ')
+                .openOn(map);
+        }
+
+
     }
 
 
@@ -151,7 +151,6 @@
         if (!sessionStorage.getItem('username')) {
 
             showError('loginError', 'Sorry, you need to be logged in order to book.')
-
             openLoginModal()
 
             $('#loginModal').on('hidden.bs.modal', function() {
@@ -165,7 +164,7 @@
 
             if (accID.length === 0) {
 
-                showError("bookError", 'Invalid accommodation ID, please contact the administrator at admin@placestotstay.co.uk')
+                showError("bookError", 'Invalid accommodation ID, please contact the administrator at admin@places-totstay.herokuapp.com')
 
             } else if (!begin_at) {
 
@@ -195,79 +194,7 @@
 
     }
 </script>
-<script>
-    function loginFunction() {
 
-
-        let loginObj = {
-            loginUser: document.getElementById("loginUser").value,
-            loginPassword: document.getElementById("loginPassword").value,
-        }
-
-
-        $.ajax({
-            type: "POST",
-            url: "/login",
-            data: JSON.stringify(loginObj),
-            contentType: "application/json; charset=utf-8",
-            async: true,
-            success: function(msg) {
-                if (msg === false) {
-                    var element = document.getElementById('loginError')
-                    element.style.display = "block"
-                    element.innerHTML = 'User or password incorrect!'
-                    $('#loginError').delay(1000).fadeOut(1000)
-                        .promise().done(function() {
-                            element.innerHTML = '<a href="#" class="close" id="loginError">×</a>'
-                        });
-                } else {
-
-                    let username = sessionStorage.setItem('username', msg.username)
-                    let access = sessionStorage.setItem('access', msg.admin)
-
-                    document.getElementById('loggedInAs').innerHTML += username
-                    var navNotLogged = document.getElementById('navNotLogged')
-                    var navLogged = document.getElementById('navLogged')
-
-                    $('.modal').modal('hide')
-
-                    $("#navNotLogged").fadeOut(2000).promise().done(function() {
-                        document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
-                        navLogged.style.display = 'block';
-                    })
-
-
-
-
-                }
-
-            },
-            error: function() {
-                console.log('Error!!');
-            }
-        })
-    }
-
-    function logout() {
-
-        sessionStorage.clear()
-
-        var navNotLogged = document.getElementById('navNotLogged')
-        var navLogged = document.getElementById('navLogged')
-        $("#navLogged").fadeOut(2000).promise().done(function() {
-            navNotLogged.style.display = 'block'
-        })
-
-        const url = "/logout"
-
-        let xhr = new XMLHttpRequest()
-        xhr.open('POST', url, true)
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-        xhr.send();
-
-
-    }
-</script>
 <script>
     function payment() {
 

@@ -13,10 +13,19 @@
 
 .alert-danger {
     text-align: center;
-    color: red;
     margin: 15px auto -20px auto;
     width: 75%;
-    border: 5px solid #FFFF00;
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+    z-index: 1060;
+    position: relative;
+}
+
+.alert-success {
+    text-align: center;
+    margin: 15px auto -20px auto;
+    width: 75%;
     border-radius: 5px;
     padding: 10px;
     display: none;

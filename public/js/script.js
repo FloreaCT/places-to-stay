@@ -27,7 +27,7 @@ async function ajaxSearch(accommodation, accType) {
 
                 if (results[i].type === accType || accType === "Any") {
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
-                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + ' <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> ' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() required><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>').on('click', clickZoom);
+                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + ' <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> ' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>').on('click', clickZoom);
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
 
@@ -51,6 +51,143 @@ document.getElementById('ajaxButton').addEventListener('click', () => {
     const accType = document.getElementById("typeOfAccommodation").value
     ajaxSearch(accommodation, accType);
 });
+
+function loginFunction() {
+
+
+    let loginObj = {
+        loginUser: document.getElementById("loginUser").value,
+        loginPassword: document.getElementById("loginPassword").value,
+    }
+
+
+    $.ajax({
+        type: "POST",
+        url: "/login",
+        data: JSON.stringify(loginObj),
+        contentType: "application/json; charset=utf-8",
+        async: true,
+        success: function(msg) {
+            if (msg === false) {
+                var element = document.getElementById('loginError')
+                element.style.display = "block"
+                element.innerHTML = 'User or password incorrect!'
+                shakeModal()
+                $('#loginError').delay(1000).fadeOut(1000)
+                    .promise().done(function() {
+                        element.innerHTML = '<a href="#" class="close" id="loginError">×</a>'
+                    });
+            } else {
+
+                let username = sessionStorage.setItem('username', msg.username)
+                sessionStorage.setItem('access', msg.admin)
+
+                document.getElementById('loggedInAs').innerHTML += username
+                var navNotLogged = document.getElementById('navNotLogged')
+                var navLogged = document.getElementById('navLogged')
+
+                $('.modal').modal('hide')
+
+                $("#navNotLogged").fadeOut(2000).promise().done(function() {
+                    document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
+                    navLogged.style.display = 'block';
+                })
+
+
+
+
+            }
+
+        },
+        error: function() {
+            console.log('Error!!');
+        }
+    })
+}
+
+function logout() {
+
+    sessionStorage.clear()
+
+    var navNotLogged = document.getElementById('navNotLogged')
+    $("#navLogged").fadeOut(2000).promise().done(function() {
+        navNotLogged.style.display = 'block'
+    })
+
+    const url = "/logout"
+
+    let xhr = new XMLHttpRequest()
+    xhr.open('POST', url, true)
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhr.send();
+
+
+}
+
+
+function register() {
+
+    const registerUser = document.getElementById("registerUsername").value
+
+    if (registerUser.length <= 3) {
+        shakeModal()
+        showError('registerError', 'Username must be at least 4 characters')
+        return false
+    }
+
+    const registerPassword = document.getElementById("registerPassword").value
+
+    if (registerPassword.length <= 3) {
+        shakeModal()
+        showError('registerError', 'Password must be at least 4 characters')
+        return false
+    }
+    const passwordConfirmation = document.getElementById("passwordConfirmation").value
+
+    if (!registerUser || !registerPassword || !passwordConfirmation) {
+        shakeModal()
+        showError('registerError', 'Please enter all details')
+        return false
+    } else if (registerPassword != passwordConfirmation) {
+        shakeModal()
+        showError('registerError', 'Password does not match')
+        return false
+    }
+
+    let registerObj = {
+        registerUser: document.getElementById("registerUsername").value,
+        registerPassword: document.getElementById("registerPassword").value,
+        passwordConfirmation: document.getElementById("passwordConfirmation").value,
+    }
+
+
+    $.ajax({
+        type: "POST",
+        url: "/register",
+        data: JSON.stringify(registerObj),
+        contentType: "application/json; charset=utf-8",
+        async: true,
+        success: function(msg) {
+            if (msg) {
+                var element = document.getElementById('registerSuccess')
+                element.style.display = "block"
+                element.innerHTML = 'User created!'
+                $('#registerSuccess').delay(500).fadeOut(1000).promise().done(function() {
+                        showLoginForm()
+                        $('#registerForm')
+                            .find("input,textarea,select")
+                            .val('')
+                            .end()
+                    })
+                    // showError('registerError', 'User created!')
+            } else {
+                shakeModal()
+                showError('registerError', 'User already in the database.')
+            }
+        }
+    })
+
+}
 
 async function loadTypes() {
     try {
@@ -326,7 +463,6 @@ closeAlertMap.addEventListener('click', function() {
 
 
 var submitButton = document.getElementById('ajaxButton');
-
 submitButton.addEventListener('click', function() {
 
     // Disable the submit button
@@ -363,32 +499,10 @@ submitButton.addEventListener('click', function() {
             interval = window.setInterval(run, delay);
         }
 
-        // exports
-        // This actually creates a function that our counter can call
-        // you'll see it used below.
-        //
-        // The other functions above cannot be accessed from outside
-        // this function.
         start();
     }
 
-    // // Change the "Submit" text
-    // setTimeout(changeButton(3), 1000)
-    // setTimeout(changeButton(2), 2000)
-    // setTimeout(changeButton(1), 3000)
-    // setTimeout(changeButton('Search Again'), 3500)
 
-    // function changeButton(num) {
-    //     if ([1, 2, 3].includes(num)) {
-    //         console.log('got in please wait??');
-    //         submitButton.value = 'Please wait...' + `${num}`
-    //     } else if (num === 'Search Again') {
-    //         console.log("got here laos");
-    //         submitButton.value = num
-    //     } else {
-
-    //     }
-    // }
 
 }, false);
 

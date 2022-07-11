@@ -8,7 +8,7 @@ function bookAccommodation() {
         npeople: document.getElementById("npeople").value
     }
 
-    const url = "http://localhost:3030/book"
+    const url = "/book"
 
     let xhr = new XMLHttpRequest()
 
