@@ -1,15 +1,105 @@
 .formLogout {
     display: inline-block;
-    float: right;
 }
 
 .navbar.navbar-expand-lg {
     padding: 0;
 }
 
+.container {
+    z-index: 1061
+}
+
+
+/* BEGIN MENU INSIDE THE MAP */
+
+.mapbox {
+    position: relative;
+}
+
+.mapbox .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.mapbox .overlay .btn {
+    pointer-events: initial;
+}
+
+.search {
+    position: absolute;
+    height: 30vh;
+    border: 1px solid #444;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    right: 0;
+}
+
+
+/* BEGIN CAROUSEL CUSTOMIZATION AND OVERRIDING */
+
+
+/* For map popup carousel */
+
 .carouselImg {
     height: 200px;
 }
+
+
+/* For the big carousel */
+
+.carouselBigImg {
+    height: 30vh;
+    width: 15vw;
+}
+
+.carousel-inner.carouselBig {
+    margin: auto;
+    width: 35vw;
+    padding: 10px;
+    border-radius: 75px;
+    text-align: center;
+}
+
+
+/* Modal inside the carousel */
+
+.modal-booking {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: 80vh;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 0.3rem;
+    outline: 0;
+}
+
+#mainCarousel .carousel-indicators {
+    margin-left: 40%;
+    margin-right: 40%;
+    background-color: rgba(255, 255, 255, 0.6)
+}
+
+#mainCarousel .carousel-indicators [data-bs-target] {
+    background-color: #0d6efd;
+}
+
+#mainCarousel .carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230d6efd'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")!important;
+}
+
+#mainCarousel .carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230d6efd'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")!important;
+}
+
+
+/* END CAROUSEL CUSTOMIZATION */
 
 .alert-danger {
     text-align: center;
@@ -62,7 +152,6 @@
 .logo:first-child {
     display: inline-block;
     vertical-align: top;
-    float: left;
     margin: 10px 0 0 10px;
 }
 
@@ -80,10 +169,18 @@
     text-align: center;
 }
 
+@media (min-width: 576px) {
+    .modal-dialog-centered {
+        max-width: 50vw!important;
+    }
+}
+
 #map {
-    margin-top: 10px;
+    position: fixed;
+    left: 0;
     width: 100%;
-    height: 800px;
+    height: 100vh;
+    top: 80px;
     border: 1px solid #AAA;
     z-index: 1;
 }

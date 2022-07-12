@@ -103,23 +103,48 @@
 
 </header>
 
-<div class="center">
-    <form>
-        <div class="form-group">
-            <label for="accommodationSearch"><h1>Your next place to stay!</h1>Where would you like to stay:</label>
-            <input type="text" class="form-control" id="accommodationSearch" placeholder="City or Area">
-        </div>
-        <div class="form-group">
-            <label for="typeOfAccommodation">Type of accommodation</label>
-            <select class="form-control" id="typeOfAccommodation">
-            <option value="Any">Any</option>
-  </select>
-        </div>
-        <input type='button' id='ajaxButton' value='Search!' class="btn btn-primary" /></select>
-        <br><br>
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-booking">
+            <div class="modal-header">
+                <div class="centerSmall" id="accTitle"></div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="accMainPage">
+                <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators"><button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner carouselBig" id="carouselInner">
+                        <div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselBigImg" alt="..."> </div>
+                        <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselBigImg" alt="..."></div>
+                        <div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselBigImg" alt="..."></div>
+                    </div><button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button>
+                </div>
+                <div id="accDetails" class="centerSmall">
 
-        <div class="alert alert-danger align-items-center" role="alert" id="alertMap" style="display: none">
-            No accommodation found!
+                </div>
+                <div id='bottom'>
+                    <div id="left"> LEFT DIV</div>
+                    <div class="form-control centerSmall" type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" id="forMaxPeople" value="">
+                        <div class="centerSmall"><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required>
+                        </div>
+                        <div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green">
+                        </div>
+                        <div class="centerSmall">
+                            <div class="alert alert-danger" id="bookError" style="display: none">
+                            </div>
+                            <input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 </div>
+
 </form>

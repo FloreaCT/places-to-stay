@@ -1,3 +1,15 @@
+// + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id +
+//                             '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>')
+
+document.getElementById('ajaxButton').addEventListener('click', () => {
+    // Read the product type from a text field
+    const element = document.getElementById('map')
+    element.style.height = '100vh';
+    element.style.top = '70px'
+    const accommodation = document.getElementById('accommodationSearch').value;
+    const accType = document.getElementById("typeOfAccommodation").value
+    ajaxSearch(accommodation, accType);
+});
 async function ajaxSearch(accommodation, accType) {
     try {
         if (!accommodation) {
@@ -11,7 +23,7 @@ async function ajaxSearch(accommodation, accType) {
         layerGroup.clearLayers();
 
         bounds = []
-        console.log(results.length);
+
         if (results.length === 0) {
 
             showError("alertMap", "No accommodation found!")
@@ -19,6 +31,7 @@ async function ajaxSearch(accommodation, accType) {
         } else {
 
             function clickZoom(e) {
+
                 latlng = e.target.getLatLng()
                 map.setView([latlng.lat + 0.10, latlng.lng], 11);
                 checkAvailability()
@@ -27,7 +40,9 @@ async function ajaxSearch(accommodation, accType) {
 
                 if (results[i].type === accType || accType === "Any") {
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
-                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' + ' <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> ' + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id + '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker"" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>').on('click', clickZoom);
+                        .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' +
+                            '<input type="hidden" id="accID" name="accID" value="' + results[i].id + '"> <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> <br><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=openBookModal(' + results[i].id + ')></div> ')
+                        .on('click', clickZoom)
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
 
@@ -45,12 +60,53 @@ async function ajaxSearch(accommodation, accType) {
     }
 }
 
-document.getElementById('ajaxButton').addEventListener('click', () => {
-    // Read the product type from a text field
-    const accommodation = document.getElementById('accommodationSearch').value;
-    const accType = document.getElementById("typeOfAccommodation").value
-    ajaxSearch(accommodation, accType);
-});
+function bookAccommodation() {
+
+    if (!sessionStorage.getItem('username')) {
+
+        showError('loginError', 'Sorry, you need to be logged in order to book.')
+        openLoginModal()
+
+        $('#loginModal').on('hidden.bs.modal', function() {
+            loginError.style.display = 'none'
+        })
+    } else {
+
+        const accID = document.getElementById("accID").value
+        const begin_at = document.getElementById("datepicker").value
+        const npeople = document.getElementById("npeople").value
+
+        if (accID.length === 0) {
+
+            showError("bookError", 'Invalid accommodation ID, please contact the administrator at admin@places-totstay.herokuapp.com')
+
+        } else if (!begin_at) {
+
+            showError("bookError", "Please select a date!")
+
+        } else {
+
+            validate()
+            openCreditCard()
+        }
+
+
+    }
+}
+
+function validate() {
+    if (!parseInt(document.getElementById('npeople').value)) {
+        showError("bookError", "Please select the number of persons")
+        throw "exit"
+    } else if (parseInt(document.getElementById('npeople').value) <= 0) {
+        showError("bookError", `Cannot book for ${document.getElementById('npeople').value} people. Please adjust the number of people`);
+        throw "exit"
+    } else if (parseInt(document.getElementById('npeople').value) > parseInt(document.getElementById('forMaxPeople').value)) {
+        showError("bookError", 'Please adjust the number of persons.');
+        throw "exit"
+    }
+
+}
 
 function loginFunction() {
 
@@ -83,7 +139,6 @@ function loginFunction() {
                 sessionStorage.setItem('access', msg.admin)
 
                 document.getElementById('loggedInAs').innerHTML += username
-                var navNotLogged = document.getElementById('navNotLogged')
                 var navLogged = document.getElementById('navLogged')
 
                 $('.modal').modal('hide')
@@ -124,6 +179,17 @@ function logout() {
 
 }
 
+function accDetails(id) {
+    $.ajax({
+        type: "POST",
+        url: "/accDetails/" + id,
+        dataType: "JSON",
+        success: function(response) {
+            console.log(response)
+        }
+    })
+
+}
 
 function register() {
 
@@ -241,9 +307,7 @@ function checkAvailability() {
 
             $('#datepicker').datepicker({
                 dateFormat: 'dd/mm/yy',
-                changeMonth: true,
-                changeYear: true,
-                clickInput: true,
+                inline: true,
                 beforeShowDay: function(d) {
                     var year = d.getFullYear(),
                         month = ("0" + (d.getMonth() + 1)).slice(-2),
@@ -307,7 +371,6 @@ function cardChecker(response) {
         });
 
         // add invalid class to empty inputs
-        console.log(emptyText.prevObject);
         emptyText.prevObject.addClass('invalid');
     }
 
@@ -402,6 +465,62 @@ function showError(elementId, text) {
     $("#" + elementId).delay(1000).fadeOut(1200)
 }
 
+function payment() {
+
+    let bookObj = {
+        accID: document.getElementById("accID").value,
+        begin_at: document.getElementById("datepicker").value,
+        npeople: document.getElementById("npeople").value
+    }
+
+    const creditCard = {
+        cardHolder: document.getElementById('card-holder').value,
+        cardNumber: document.getElementById('card-number').value,
+        cardCVC: document.getElementById('card-cvc').value,
+        expDetails: document.getElementById('card-month').value.toString() + "/" + document.getElementById('card-year').value.toString()
+    }
+
+
+    $.ajax({
+        type: "POST",
+        url: "/checkCreditCard",
+        data: JSON.stringify([creditCard, bookObj]),
+        contentType: "application/json; charset=utf-8",
+        async: true,
+        success: function(response) {
+            cardChecker(response)
+        },
+        error: function(xhr, status, error) {
+            alert("An error occured during booking, your account was not debited. Please contact the Administrator!", error);
+        }
+
+    });
+
+    // payment().then((response) => {
+
+    //     if (!response) {
+    //         alert('Payment unsuccessful, your account was not debited.');
+    //         return
+    //     } else {
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "http://localhost:3030/book",
+    //             data: JSON.stringify(bookObj),
+    //             contentType: "application/json; charset=utf-8",
+    //             async: true,
+    //             success: function(response) {
+    //                 alert(response)
+    //                 map.closePopup();
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 alert("An error occured during booking, please contact the Administrator!", error);
+    //             }
+
+    //         });
+    //     }
+    // })
+}
+
 $(document).ready(function() {
 
     $("#but_upload").click(function() {
@@ -430,7 +549,7 @@ $(document).ready(function() {
                     }
                 },
                 error: function(response) {
-                    console.log(response);
+
                     alert("Off... This is an Error and usually it doesn't happen, please contact the Administrator.")
                 }
             });
@@ -440,27 +559,25 @@ $(document).ready(function() {
     });
 });
 
-
-document.addEventListener(
-    "click",
-    function(event) {
-        //  Close modal if user either clicks X button OR clicks outside the modal window.
-        if (
-            event.target.matches(".button-close-modal") ||
-            !event.target.closest(".modal")
-        ) {
-            $('.modal').modal('hide')
-        }
-    },
-    false
-)
+// document.addEventListener(
+//     "click",
+//     function(event) {
+//         //  Close modal if user either clicks X button OR clicks outside the modal window.
+//         if (
+//             event.target.matches(".button-close-modal") || !event.target.matches(".bookModal") &&
+//             !event.target.closest(".modal")
+//         ) {
+//             $('.modal').modal('hide')
+//         }
+//     },
+//     false
+// )
 
 var closeAlertMap = document.getElementById('alertMap')
 closeAlertMap.addEventListener('click', function() {
     document.getElementById("alertMap").classList.add('hidden')
     document.getElementById('alertMap').innerHTML = '<a href="#" class="close" id="closeAlertMap">×</a>'
 })
-
 
 var submitButton = document.getElementById('ajaxButton');
 submitButton.addEventListener('click', function() {
@@ -509,7 +626,6 @@ submitButton.addEventListener('click', function() {
 window.onload = function() {
     loadTypes();
     if (sessionStorage.getItem('username')) {
-        console.log(sessionStorage.getItem('username'));
         document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
         document.getElementById('navNotLogged').style.display = 'none'
         document.getElementById('navLogged').style.display = 'block'

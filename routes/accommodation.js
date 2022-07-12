@@ -40,6 +40,7 @@ module.exports = {
 
         })
 
+        router.get("/accDetails/:accID", locationController.accDetails)
         router.post("/availability/:accID", locationController.availability)
         router.post("/availability/:accID/:date", locationController.availableSpace)
         router.post("/checkCreditCard", paymentController.checkCreditCard)

@@ -39,12 +39,10 @@ let initPassportLocal = () => {
 }
 
 passport.serializeUser((user, done) => {
-    console.log("serialized");
     return done(null, user.id)
 })
 
 passport.deserializeUser(async(id, done) => {
-    console.log("deserialized");
     await loginService.findUserById(id).then(user => {
         return done(null, user)
     }).catch(error => {

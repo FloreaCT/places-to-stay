@@ -98,3 +98,31 @@ function openLoginModal() {
     }, 230);
 
 }
+
+async function openBookModal(accID) {
+
+    const accDetails = await fetch(`/accDetails/${accID}`)
+
+    const results = await accDetails.json();
+    if (results) {
+        showBookModal(results);
+        setTimeout(function() {
+            $('#bookModal').modal('show');
+        }, 230);
+    } else {
+        return false
+    }
+
+}
+
+
+function showBookModal(results) {
+    console.log(results.name);
+
+    $('.bookModal').fadeIn('fast');
+    $('.modal-title').html('Booking Modal');
+    $('#accTitle').html(`<h2> ${results.name} </h2> <br> Location: ${results.location}   `)
+    $('#accDetails').html(`<h4> ${results.description}</h4>`)
+    $('.error').removeClass('alert alert-danger').html('');
+
+}

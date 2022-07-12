@@ -20,9 +20,7 @@ var upload = multer({
 const image = async(req, res) => {
 
     if (!req.file) {
-        console.log("No file upload");
         res.json({ 'nofile': 'No file uploaded' })
-
     } else {
 
         var imgName = '/images/uploadedImages/' + req.file.filename

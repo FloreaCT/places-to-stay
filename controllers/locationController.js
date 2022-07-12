@@ -21,7 +21,7 @@ const findAllTypes = function(req, res) {
 
 const book = async function(req, res, next) {
     const time = req.body[1].begin_at;
-    console.log(req.body[1]);
+
     const newTime = time.split('/').reverse().join('/').replace('/', "").replace('/', "").slice(2, 8);
 
     try {
@@ -80,9 +80,20 @@ const availableSpace = async function(req, res, next) {
     })
 }
 
+const accDetails = function(req, res) {
+    models.accommodation.findOne({
+        where: {
+            id: req.params.accID
+        }
+    }).then((results) => {
+        res.send(results)
+    })
+}
+
 module.exports = {
     findAllAccommodations: findAllAccommodations,
     book: book,
     availability: availability,
-    availableSpace: availableSpace
+    availableSpace: availableSpace,
+    accDetails: accDetails
 }
