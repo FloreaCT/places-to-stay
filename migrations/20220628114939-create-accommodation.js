@@ -8,6 +8,13 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
+            accID: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            },
             name: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -22,7 +29,14 @@ module.exports = {
                     notEmpty: true
                 }
             },
-            location: {
+            county: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true,
+                }
+            },
+            city: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 validate: {

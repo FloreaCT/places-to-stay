@@ -1,3 +1,80 @@
+.bottom-booking {
+    width: 100%;
+    text-align: center;
+}
+
+
+/* START INCREASE/DECREASE INPUT FOR NR OF PERSONS */
+
+.incDec {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.value-button {
+    display: inline-block;
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 25px;
+    text-align: center;
+    vertical-align: middle;
+    background: #eee;
+    -webkit-touch-callout: initial;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.value-button:hover {
+    cursor: pointer;
+}
+
+.incDec #decrease {
+    margin-right: -3px;
+    border-radius: 8px 0 0 8px;
+}
+
+.incDec #increase {
+    margin-left: -3px;
+    border-radius: 0 8px 8px 0;
+}
+
+.incDec #input-wrap {
+    margin: 0px;
+    padding: 0px;
+}
+
+.incDec .number {
+    background-color: #444;
+    text-align: center;
+    border: none;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 40px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Firefox */
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+/* END OF INCREASE/DECREASE INPUT */
+
 .formLogout {
     display: inline-block;
 }
@@ -6,9 +83,23 @@
     padding: 0;
 }
 
-.container {
-    z-index: 1061
+#loginModal {
+    z-index: 1061;
 }
+
+#creditCard {
+    z-index: 1062
+}
+
+#bookModal {
+    overflow: visible;
+    overflow-y: visible;
+}
+
+
+/* .container {
+    z-index: 1061
+} */
 
 
 /* BEGIN MENU INSIDE THE MAP */
@@ -38,7 +129,8 @@
     padding: 10px;
     text-align: center;
     padding-bottom: 20px;
-    top: 7vh
+    top: 110%;
+    z-index: 1041;
 }
 
 #alertMap {
@@ -61,13 +153,13 @@
 .carouselBigImg {
     height: 30vh;
     width: 15vw;
+    border-radius: 15px;
 }
 
 .carousel-inner.carouselBig {
     margin: auto;
     width: 35vw;
     padding: 10px;
-    border-radius: 75px;
     text-align: center;
 }
 
@@ -78,8 +170,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 50vw;
-    height: 80vh;
+    width: 100%;
+    height: 99%;
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
@@ -104,6 +196,14 @@
 
 #mainCarousel .carousel-control-prev-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230d6efd'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")!important;
+}
+
+#mainCarousel .carousel-control-next {
+    right: 10%
+}
+
+#mainCarousel .carousel-control-prev {
+    left: 10%
 }
 
 
@@ -177,9 +277,12 @@
     text-align: center;
 }
 
+
+/* Override Bootstrap CSS for bookModal*/
+
 @media (min-width: 576px) {
     .modal-dialog-centered {
-        max-width: 50vw!important;
+        max-width: 70%!important;
     }
 }
 
@@ -510,6 +613,7 @@ header[role=banner] {
     position: relative;
     height: 50px;
     background: #343642;
+    z-index: 1039;
 }
 
 header[role=banner] #cd-logo {

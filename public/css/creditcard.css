@@ -7,6 +7,10 @@
     font-size: 14px;
 }
 
+#card-front {
+    top: 0;
+}
+
 #card-back {
     top: 40px;
     right: 0;
@@ -14,8 +18,8 @@
 }
 
 #card-btn {
-    background-color: rgba(251, 251, 251, 0.8);
-    color: #ffb242;
+    background-color: #0d6efd;
+    color: white;
     position: absolute;
     bottom: -55px;
     right: 0;
@@ -33,7 +37,7 @@
 }
 
 #card-btn:hover {
-    background-color: rgba(251, 251, 251, 1);
+    background-color: #0d6efd;
 }
 
 #card-cvc {
@@ -177,7 +181,7 @@ input {
     border: none;
     outline: none;
     background-color: #5a9def;
-    height: 30px;
+    height: 38px;
     line-height: 30px;
     padding: 0 10px;
     margin: 0 0 25px;

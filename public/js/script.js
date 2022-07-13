@@ -1,12 +1,10 @@
-// + '<form name="bookingForm"><input type="hidden" id="accID" name="accID" value="' + results[i].id +
-//                             '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>')
-
 document.getElementById('ajaxButton').addEventListener('click', () => {
 
     const accommodation = document.getElementById('accommodationSearch').value;
     const accType = document.getElementById("typeOfAccommodation").value
     ajaxSearch(accommodation, accType);
 });
+
 async function ajaxSearch(accommodation, accType) {
     try {
         if (!accommodation) {
@@ -38,7 +36,7 @@ async function ajaxSearch(accommodation, accType) {
                 if (results[i].type === accType || accType === "Any") {
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
                         .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' +
-                            '<input type="hidden" id="accID" name="accID" value="' + results[i].id + '"> <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> <br><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=openBookModal(' + results[i].id + ')></div> ')
+                            '<input type="hidden" id="accomID" name="accomID" value="' + results[i].id + '"> <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> <br><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=openBookModal(' + results[i].id + ')></div> ')
                         .on('click', clickZoom)
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
@@ -69,11 +67,11 @@ function bookAccommodation() {
         })
     } else {
 
-        const accID = document.getElementById("accID").value
+        const accomID = document.getElementById("accomID").value
         const begin_at = document.getElementById("datepicker").value
         const npeople = document.getElementById("npeople").value
 
-        if (accID.length === 0) {
+        if (accomID.length === 0) {
 
             showError("bookError", 'Invalid accommodation ID, please contact the administrator at admin@places-totstay.herokuapp.com')
 
@@ -85,6 +83,9 @@ function bookAccommodation() {
 
             validate()
             openCreditCard()
+            $("#creditCard").on('hidden.bs.modal', function() {
+                $('.modal-backdrop').css('z-index', '1059');
+            });
         }
 
 
@@ -182,7 +183,7 @@ function accDetails(id) {
         url: "/accDetails/" + id,
         dataType: "JSON",
         success: function(response) {
-            console.log(response)
+
         }
     })
 
@@ -281,11 +282,11 @@ async function loadTypes() {
 
 function checkAvailability() {
 
-    const accID = document.getElementById("accID").value
+    const accomID = document.getElementById("accomID").value
     const enabled_days = []
     $.ajax({
         type: "POST",
-        url: "/availability/" + accID,
+        url: "/availability/" + accomID,
         dataType: "JSON",
         success: function(response) {
 
@@ -318,8 +319,8 @@ function checkAvailability() {
                         return [false, "", "unAvailable"];
                     }
                 }
+
             });
-            // alert(JSON.stringify(response));
         },
         error: function(xhr, status, error) {
             alert("We dont usually get this error: ", error);
@@ -331,7 +332,7 @@ function checkAvailability() {
 
 function availableSpace() {
 
-    const accID = document.getElementById('accID').value
+    const accomID = document.getElementById('accomID').value
     const date = document.getElementById('datepicker').value.toString()
     const year = date.slice(8, 10)
     const month = date.slice(3, 5)
@@ -340,15 +341,15 @@ function availableSpace() {
 
     $.ajax({
         type: "POST",
-        url: "/availability/" + accID + "/" + newDate,
+        url: "/availability/" + accomID + "/" + newDate,
         dataType: "JSON",
         success: function(response) {
 
             document.getElementById('npeople').setAttribute('max', response.availability)
             document.getElementById('npeople').setAttribute('type', "number")
             document.getElementById('forMaxPeople').setAttribute('value', response.availability)
-            document.getElementById('maxPeople').setAttribute('type', "visible")
-            document.getElementById('maxPeople').innerHTML = `Spaces Available ${response.availability}`
+            document.getElementById('maxPeople').removeAttribute('class', 'hidden')
+            document.getElementById('maxPeople').innerHTML = `Available spaces:  ${response.availability}`
 
         }
     })
@@ -516,6 +517,30 @@ function payment() {
     //         });
     //     }
     // })
+}
+
+function increaseValue() {
+    if (!document.getElementById('forMaxPeople').value) {
+        showError('bookError', 'Select date first')
+    } else {
+        var maxPeople = document.getElementById('forMaxPeople').value
+        var value = parseInt(document.getElementById('npeople').value, 10);
+        value = isNaN(value) ? 0 : value;
+        if (value === parseInt(maxPeople)) {
+            return 'exit'
+        } else {
+            value++;
+            document.getElementById('npeople').value = value;
+        }
+    }
+}
+
+function decreaseValue() {
+    var value = parseInt(document.getElementById('npeople').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value < 1 ? value = 1 : '';
+    value--;
+    document.getElementById('npeople').value = value;
 }
 
 $(document).ready(function() {

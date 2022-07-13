@@ -8,6 +8,13 @@ module.exports = (sequelize, DataTypes) => {
 
     }
     accommodation.init({
+        accID: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -22,10 +29,16 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
-        location: {
+        county: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
+            validate: {
+                notEmpty: true,
+            }
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false,
             validate: {
                 notEmpty: true,
             }
@@ -63,20 +76,20 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: false
     });
 
-    // accommodation.associations = (models) => {
-    //     accommodation.belongsToMany(models.User, {
-    //             as: 'user',
-    //             foreignKey: 'userId',
-    //             onDelete: 'cascade',
-    //             onUpdate: 'cascade'
-    //         }),
-    //         Attenders_to.belongsTo(models.Event, {
-    //             as: 'event',
-    //             foreignKey: 'eventId',
-    //             onDelete: 'cascade',
-    //             onUpdate: 'cascade'
-    //         })
-    // }
+    accommodation.associations = (models) => {
+        accommodation.belongsTo(models.acc_users, {
+                as: 'users',
+                foreignKey: 'accID',
+                onDelete: 'cascade',
+                onUpdate: 'cascade'
+            }),
+            accommodation.hasOne(models.acc_amenities, {
+                as: 'acc_amenities',
+                foreignKey: 'accID',
+                onDelete: 'cascade',
+                onUpdate: 'cascade'
+            })
+    }
 
     return accommodation;
 };

@@ -48,10 +48,17 @@ module.exports = (sequelize, DataTypes) => {
     acc_users.associate = (models) => {
 
         acc_users.hasMany(models.acc_images, {
-            as: 'images',
-            foreignKey: 'accID',
-            onDelete: 'cascade'
-        })
+                as: 'images',
+                foreignKey: 'accID',
+                onDelete: 'cascade',
+                onUpdate: 'cascade'
+            },
+            acc_users.hasMany(models.accommodation, {
+                as: 'accommodation',
+                foreignKey: 'accID',
+                onDelete: 'cascade',
+                onUpdate: 'cascade'
+            }))
     }
 
     return acc_users;

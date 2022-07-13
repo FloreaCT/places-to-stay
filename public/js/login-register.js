@@ -38,28 +38,12 @@ function openLoginModal() {
 
 }
 
-
 function openRegisterModal() {
     showRegisterForm();
     setTimeout(function() {
         $('#loginModal').modal('show');
     }, 230);
 
-}
-
-function loginAjax() {
-    /*   Remove this comments when moving to server
-    $.post( "/login", function( data ) {
-            if(data == 1){
-                window.location.replace("/home");            
-            } else {
-                 shakeModal(); 
-            }
-        });
-    */
-
-    /*   Simulate error message from the server   */
-    shakeModal();
 }
 
 function shakeModal() {
@@ -77,7 +61,6 @@ function showCreditCard() {
         $('.register-footer').fadeOut('fast', function() {
             $('.login-footer').fadeIn('fast');
         });
-
         $('.modal-title').html('Credit Card');
     });
     $('.error').removeClass('alert alert-danger').html('');
@@ -86,6 +69,11 @@ function showCreditCard() {
 function openCreditCard() {
     showCreditCard();
     setTimeout(function() {
+        $('#creditCard').on('show.bs.modal', function(e) {
+            setTimeout(function() {
+                $('.modal-backdrop').css('z-index', '1061');
+            });
+        });
         $('#creditCard').modal('show');
     }, 230);
 
@@ -99,9 +87,9 @@ function openLoginModal() {
 
 }
 
-async function openBookModal(accID) {
+async function openBookModal(accomID) {
 
-    const accDetails = await fetch(`/accDetails/${accID}`)
+    const accDetails = await fetch(`/accDetails/${accomID}`)
 
     const results = await accDetails.json();
     if (results) {
@@ -109,6 +97,7 @@ async function openBookModal(accID) {
         setTimeout(function() {
             $('#bookModal').modal('show');
         }, 230);
+        document.getElementById('maxPeople').setAttribute('class', 'hidden')
     } else {
         return false
     }
@@ -117,11 +106,10 @@ async function openBookModal(accID) {
 
 
 function showBookModal(results) {
-    console.log(results.name);
 
     $('.bookModal').fadeIn('fast');
     $('.modal-title').html('Booking Modal');
-    $('#accTitle').html(`<h2> ${results.name} </h2> <br> Location: ${results.location}   `)
+    $('#accTitle').html(`<h2> ${results.name} </h2> Location: ${results.city}   `)
     $('#accDetails').html(`<h4> ${results.description}</h4>`)
     $('.error').removeClass('alert alert-danger').html('');
 

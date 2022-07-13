@@ -8,7 +8,7 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            accID: {
+            accomID: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 validate: {
@@ -27,7 +27,7 @@ module.exports = {
                 allowNull: false,
                 validate: {
                     notEmpty: true
-                }
+                },
             }
         });
     },

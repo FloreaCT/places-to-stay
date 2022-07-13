@@ -26,83 +26,103 @@
             </div>
 
 
-            <div class="modal fade login" id="loginModal">
-                <div class="modal-dialog login animated">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Login with</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="box">
-                                <div class="content">
-                                    <div class="social">
-                                        <a class="circle github" href="#">
-                                            <i class="fa fa-github fa-fw"></i>
-                                        </a>
-                                        <a id="google_login" class="circle google" href="#">
-                                            <i class="fa fa-google-plus fa-fw"></i>
-                                        </a>
-                                        <a id="facebook_login" class="circle facebook" href="#">
-                                            <i class="fa fa-facebook fa-fw"></i>
-                                        </a>
-                                    </div>
-                                    <div class="division">
-                                        <div class="line l"></div>
-                                        <span>or</span>
-                                        <div class="line r"></div>
-                                    </div>
-                                    <div class="error"></div>
-                                    <div class="form loginBox">
-                                        <input id="loginUser" class="form-control" type="text" placeholder="Username" name="loginUser" minlength="3" required>
-                                        <input id="loginPassword" class="form-control" type="password" placeholder="Password" name="loginPassword" minlength="4" required>
-                                        <input class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction()">
-                                        <div class="alert-danger" id="loginError" style="display: none"></div>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="content registerBox" style="display:none;">
-                                    <div class="form" id="registerForm">
 
-                                        <input id="registerUsername" class="form-control" type="text" placeholder="Username" name="username" required>
-                                        <input id="registerPassword" class="form-control" type="password" placeholder="Password" name="password" required>
-                                        <input id="passwordConfirmation" class="form-control" type="password" placeholder="Repeat Password" name="passwordConfirmation" required>
-                                        <input class="btn btn-default btn-register" type="button" value="Create account" name="registerButton" onclick="register()">
+        </div>
+        <div class="search">
+            <form>
+                <div class="form-group">
 
-                                        <div class="alert-danger" id="registerError" style="display: none"></div>
-                                        <div class="alert-success" id="registerSuccess" style="display: none"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="forgot login-footer">
-                                <span>Looking to
-                                 <a href="javascript: showRegisterForm();">create an account</a>
-                                 
-                            ?</span>
-
-                            </div>
-                            <div class="forgot register-footer" style="display:none">
-                                <span>Already have an account?</span>
-                                <a href="javascript: showLoginForm();">Login</a>
-
-                            </div>
-                        </div>
-
-                    </div>
-
+                    <input type="text" class="form-control" id="accommodationSearch" placeholder="Search destination" autocomplete="off">
                 </div>
+                <div class="form-group">
+                    <select class="form-control" id="typeOfAccommodation">
+                    <option value="Any">Type</option>
+          </select>
+                </div>
+            </form>
+            <input type='button' id='ajaxButton' value='Search!' class="btn btn-primary" /></select>
+            <br><br>
 
+            <div class="alert alert-danger align-items-center" role="alert" id="alertMap" style="display: none">
+                No accommodation found!
             </div>
-
         </div>
     </nav>
 
 </header>
 
+<div class="modal fade login" id="loginModal">
+    <div class="modal-dialog login animated">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Login with</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="box">
+                    <div class="content">
+                        <div class="social">
+                            <a class="circle github" href="#">
+                                <i class="fa fa-github fa-fw"></i>
+                            </a>
+                            <a id="google_login" class="circle google" href="#">
+                                <i class="fa fa-google-plus fa-fw"></i>
+                            </a>
+                            <a id="facebook_login" class="circle facebook" href="#">
+                                <i class="fa fa-facebook fa-fw"></i>
+                            </a>
+                        </div>
+                        <div class="division">
+                            <div class="line l"></div>
+                            <span>or</span>
+                            <div class="line r"></div>
+                        </div>
+                        <div class="error"></div>
+                        <div class="form loginBox">
+                            <input id="loginUser" class="form-control" type="text" placeholder="Username" name="loginUser" minlength="3" required>
+                            <input id="loginPassword" class="form-control" type="password" placeholder="Password" name="loginPassword" minlength="4" required>
+                            <input class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction()">
+                            <div class="alert-danger" id="loginError" style="display: none"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="content registerBox" style="display:none;">
+                        <div class="form" id="registerForm">
+
+                            <input id="registerUsername" class="form-control" type="text" placeholder="Username" name="username" required>
+                            <input id="registerPassword" class="form-control" type="password" placeholder="Password" name="password" required>
+                            <input id="passwordConfirmation" class="form-control" type="password" placeholder="Repeat Password" name="passwordConfirmation" required>
+                            <input class="btn btn-default btn-register" type="button" value="Create account" name="registerButton" onclick="register()">
+
+                            <div class="alert-danger" id="registerError" style="display: none"></div>
+                            <div class="alert-success" id="registerSuccess" style="display: none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="forgot login-footer">
+                    <span>Looking to
+                     <a href="javascript: showRegisterForm();">create an account</a>
+                     
+                ?</span>
+
+                </div>
+                <div class="forgot register-footer" style="display:none">
+                    <span>Already have an account?</span>
+                    <a href="javascript: showLoginForm();">Login</a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-booking">
@@ -128,23 +148,42 @@
                 <div id="accDetails" class="centerSmall">
 
                 </div>
-                <div id='bottom'>
-                    <div id="left"> LEFT DIV</div>
-                    <div class="form-control centerSmall" type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" id="forMaxPeople" value="">
-                        <div class="centerSmall"><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required>
+                <div id='bottom' class="d-flex p-3" style="width: auto;height:auto">
+                    <div id="left" class="bottom-booking">
+                        <div id="offers">
+                            <h2>What this place offers</h2>
                         </div>
-                        <div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green">
-                        </div>
-                        <div class="centerSmall">
-                            <div class="alert alert-danger" id="bookError" style="display: none">
-                            </div>
-                            <input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()>
+                        <div id="amenities" style="text-align: center">
+                            <div><i class="fa-solid fa-wifi"></i> Wifi</div>
+                            <div><i class="fa-regular fa-snowflake"></i> Air Conditioning</div>
+                            <div><i class="fa-solid fa-bacon"></i> Breakfast</div>
+                            <div><i class="fa-solid fa-square-parking"></i> Free Parking</div>
+                            <div><i class="fa-solid fa-pump-soap"></i> Toiletries</div>
+                            <div><i class="fa-solid fa-paw"></i> Animals</div>
                         </div>
                     </div>
+                    <div id="middle" class="w-33">
+                        <div type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" id="forMaxPeople" value="">
+                        </div>
+                    </div>
+                    <div id="right" class="bottom-booking">
+                        <div class="container hidden" id="maxPeople" style="font-size: 1.5rem; color: green;"></div>
+                        <span>Number of persons</span>
+                        <form class="incDec">
+                            <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                            <input type="number" class="number" id="npeople" value="0" />
+                            <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                        </form>
+                        <div class="alert alert-danger" id="bookError" style="display: none">
+                        </div><br>
+                        <input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick="bookAccommodation()">
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 </form>

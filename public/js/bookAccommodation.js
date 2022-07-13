@@ -3,7 +3,7 @@ function bookAccommodation() {
 
 
     let bookObj = {
-        accID: document.getElementById("accID").value,
+        accomID: document.getElementById("accomID").value,
         begin_at: document.getElementById("begin_at").value,
         npeople: document.getElementById("npeople").value
     }

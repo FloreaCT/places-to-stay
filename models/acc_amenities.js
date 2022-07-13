@@ -64,6 +64,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'acc_amenities',
+        timestamps: false,
+        createdAt: false,
+        updatedAt: false
     });
     return acc_amenities;
 };

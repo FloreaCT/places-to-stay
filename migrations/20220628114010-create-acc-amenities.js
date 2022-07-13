@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('acc_details', {
+        await queryInterface.createTable('acc_amenities', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -9,36 +9,50 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             accID: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false,
                 validate: {
                     notEmpty: true
                 }
             },
-            description: {
-                type: DataTypes.STRING,
-                allowNull: false,
+            wifi: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
                 validate: {
                     notEmpty: true
                 }
             },
-            price: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
+            air: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
                 validate: {
                     notEmpty: true
                 }
             },
-            rooms: {
-                type: DataTypes.STRING,
-                allowNull: false,
+            breakfast: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
                 validate: {
                     notEmpty: true
                 }
             },
-            room_type: {
-                type: DataTypes.STRING,
-                allowNull: false,
+            animals: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            parking: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            toiletries: {
+                type: Sequelize.STRING,
+                allowNull: true,
                 validate: {
                     notEmpty: true
                 }
@@ -51,9 +65,9 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             }
-        }).then(function() { queryInterface.sequelize.query("INSERT INTO acc_details(role, createdAt, updatedAt) VALUES ('User', NOW(), NOW()),('Organizer',NOW(), NOW()),('Administrator',NOW(),NOW())") })
+        });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('acc_details');
+        await queryInterface.dropTable('acc_amenities');
     }
 };

@@ -61,7 +61,7 @@ const book = async function(req, res, next) {
 const availability = async function(req, res, next) {
     await models.acc_dates.findAll({
         where: {
-            accID: req.params.accID
+            accomID: req.params.accomID
         }
     }).then((result) => {
         res.send(result)
@@ -72,7 +72,7 @@ const availableSpace = async function(req, res, next) {
     await models.acc_dates.findOne({
         where: {
             thedate: req.params.date,
-            accID: req.params.accID
+            accomID: req.params.accomID
         },
         attributes: ["availability"]
     }).then((result) => {
@@ -83,7 +83,7 @@ const availableSpace = async function(req, res, next) {
 const accDetails = function(req, res) {
     models.accommodation.findOne({
         where: {
-            id: req.params.accID
+            id: req.params.accomID
         }
     }).then((results) => {
         res.send(results)

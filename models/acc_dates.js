@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     acc_dates.init({
-        accID: {
+        accomID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -27,9 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         availability: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            validate: {
-                notEmpty: true,
-            }
+            defaultValue: 20
         }
 
     }, {

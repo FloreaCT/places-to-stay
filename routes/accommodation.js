@@ -23,23 +23,31 @@ module.exports = {
                 })
 
             } else if (req.params.typeOfAccommodation === "Any") {
-                console.log('here');
-                console.log(req.params.location);
                 models.accommodation.findAll({
                     where: {
-                        location: sequelize.where(sequelize.fn('lower', sequelize.col('location')), 'like', '%' + req.params.location + '%')
+                        [Op.or]: [
+                            Sequelize.where(Sequelize.fn("lower", Sequelize.col("county")), {
+                                [Op.like]: "%" + req.params.location + "%",
+                            }),
+                            Sequelize.where(Sequelize.fn("lower", Sequelize.col("city")), {
+                                [Op.like]: "%" + req.params.location + "%",
+                            })
+                        ],
                     }
                 }).then((results) => {
-
                     res.json(results);
                 })
             } else {
-                console.log(req.params.location);
                 models.accommodation.findAll({
                     where: {
-                        location: {
-                            [Op.like]: '%' + req.params.location + '%'
-                        },
+                        [Op.or]: [
+                            Sequelize.where(Sequelize.fn("lower", Sequelize.col("county")), {
+                                [Op.like]: "%" + req.params.location + "%",
+                            }),
+                            Sequelize.where(Sequelize.fn("lower", Sequelize.col("city")), {
+                                [Op.like]: "%" + req.params.location + "%",
+                            })
+                        ],
                         type: req.params.typeOfAccommodation
 
                     }
@@ -50,9 +58,9 @@ module.exports = {
 
         })
 
-        router.get("/accDetails/:accID", locationController.accDetails)
-        router.post("/availability/:accID", locationController.availability)
-        router.post("/availability/:accID/:date", locationController.availableSpace)
+        router.get("/accDetails/:accomID", locationController.accDetails)
+        router.post("/availability/:accomID", locationController.availability)
+        router.post("/availability/:accomID/:date", locationController.availableSpace)
         router.post("/checkCreditCard", paymentController.checkCreditCard)
         router.post("/book", locationController.book)
 
