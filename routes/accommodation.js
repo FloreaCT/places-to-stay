@@ -5,6 +5,9 @@ const db = require('../config/session')
 const passport = require('passport')
 const models = require('../models')
 const imageController = require('../controllers/imageController')
+const Sequelize = require("sequelize");
+const { sequelize } = require('../models');
+const Op = Sequelize.Op;
 
 // Initialize all web routes
 const router = express.Router();
@@ -13,24 +16,31 @@ module.exports = {
     initAllAccRoute(app) {
 
         router.get('/accommodation/:location/:typeOfAccommodation', (req, res) => {
+
             if (req.params.location === 'all') {
                 models.accommodation.findAll().then((results) => {
                     res.json(results)
                 })
 
             } else if (req.params.typeOfAccommodation === "Any") {
+                console.log('here');
+                console.log(req.params.location);
                 models.accommodation.findAll({
                     where: {
-                        location: `${req.params.location}`,
+                        location: sequelize.where(sequelize.fn('lower', sequelize.col('location')), 'like', '%' + req.params.location + '%')
                     }
                 }).then((results) => {
+
                     res.json(results);
                 })
             } else {
+                console.log(req.params.location);
                 models.accommodation.findAll({
                     where: {
-                        location: `${req.params.location}`,
-                        type: `${req.params.typeOfAccommodation}`
+                        location: {
+                            [Op.like]: '%' + req.params.location + '%'
+                        },
+                        type: req.params.typeOfAccommodation
 
                     }
                 }).then((results) => {

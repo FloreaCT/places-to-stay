@@ -2,10 +2,7 @@
 //                             '"><input type="hidden" id="forMaxPeople" value=""><div class="centerSmall"><input class="form-control" type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" class="form-control" id="npeople" name="npeople" placeholder="Number of persons" required> </div><div type="hidden" class="centerSmall" id="maxPeople" style="font-size: 1.5rem; color: green"></div><div class="centerSmall"><div class="alert alert-danger" id="bookError" style="display: none"></div><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=bookAccommodation()></div> </form>')
 
 document.getElementById('ajaxButton').addEventListener('click', () => {
-    // Read the product type from a text field
-    const element = document.getElementById('map')
-    element.style.height = '100vh';
-    element.style.top = '70px'
+
     const accommodation = document.getElementById('accommodationSearch').value;
     const accType = document.getElementById("typeOfAccommodation").value
     ajaxSearch(accommodation, accType);

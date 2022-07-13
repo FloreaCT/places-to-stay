@@ -30,11 +30,19 @@
 
 .search {
     position: absolute;
-    height: 30vh;
     border: 1px solid #444;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
     right: 0;
+    width: 15%;
+    padding: 10px;
+    text-align: center;
+    padding-bottom: 20px;
+    top: 7vh
+}
+
+#alertMap {
+    word-wrap: break-word;
 }
 
 
