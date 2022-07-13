@@ -135,7 +135,7 @@ function loginFunction() {
 
                 let username = sessionStorage.setItem('username', msg.username)
                 sessionStorage.setItem('access', msg.admin)
-
+                sessionStorage.setItem('accID', msg.id)
                 document.getElementById('loggedInAs').innerHTML += username
                 var navLogged = document.getElementById('navLogged')
 
@@ -465,10 +465,14 @@ function showError(elementId, text) {
 
 function payment() {
 
+
+
     let bookObj = {
-        accID: document.getElementById("accID").value,
+        accomID: document.getElementById('accomID').value,
         begin_at: document.getElementById("datepicker").value,
-        npeople: document.getElementById("npeople").value
+        npeople: document.getElementById("npeople").value,
+        accID: sessionStorage.getItem('accID'),
+        username: sessionStorage.getItem('username')
     }
 
     const creditCard = {
@@ -486,6 +490,7 @@ function payment() {
         contentType: "application/json; charset=utf-8",
         async: true,
         success: function(response) {
+            console.log(response);
             cardChecker(response)
         },
         error: function(xhr, status, error) {

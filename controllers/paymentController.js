@@ -21,7 +21,6 @@ const checkCreditCard = async function(req, res, next) {
         return res.send('cvv')
     } else {
         book(req, res, next)
-        return res.send('Well done')
     }
 }
 
