@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.uploadButton {
+    display: none
+}
+
 
 /* START INCREASE/DECREASE INPUT FOR NR OF PERSONS */
 

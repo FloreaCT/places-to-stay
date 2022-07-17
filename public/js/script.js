@@ -14,7 +14,6 @@ async function ajaxSearch(accommodation, accType) {
         const response = await fetch(`/accommodation/${accommodation}/${accType}`);
         // Parse the JSON.
         const results = await response.json();
-
         layerGroup.clearLayers();
 
         bounds = []
@@ -31,12 +30,31 @@ async function ajaxSearch(accommodation, accType) {
                 map.setView([latlng.lat + 0.10, latlng.lng], 11);
                 checkAvailability()
             }
-            for (i in results) {
 
+            for (i in results) {
+                const images = await fetch(`/images/${results[i].id}`)
+                const imagePath = await images.json()
+                var imagesForCarousel = ""
+                var buttonsForCarousel = ""
+                var active = 'active'
+
+                for (j in imagePath) {
+                    if (active === 'active') {
+                        imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>`
+                        active = ""
+                    } else { imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>` }
+                }
+
+                for (s in imagePath) {
+                    buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${1-s}" class="active" aria-current="true" aria-label="Slide ${s+1}"></button>`
+                }
+
+                console.log(results[i].id);
                 if (results[i].type === accType || accType === "Any") {
+                    // results[i].type
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
                         .bindPopup('<div class="centerSmall"><b><h3>' + results[i].name + '</h3></b>' + '<br><h4>' + results[i].description + '</h4></div>' +
-                            '<input type="hidden" id="accomID" name="accomID" value="' + results[i].id + '"> <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators"><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button><button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button> <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button></div><div class="carousel-inner" ><div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselImg" alt="..."> </div> <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselImg" alt="..."></div><div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselImg" alt="..."></div></div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> <br><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=openBookModal(' + results[i].id + ')></div> ')
+                            '<input type="hidden" id="accomID" name="accomID" value="' + results[i].id + '"> <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"><div class="carousel-indicators">' + buttonsForCarousel + '</div><div class="carousel-inner" >' + imagesForCarousel + '</div><button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button> <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button> </div> <br><div class="centerSmall"><input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick=openBookModal(' + results[i].id + ')></div> ')
                         .on('click', clickZoom)
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
@@ -44,7 +62,7 @@ async function ajaxSearch(accommodation, accType) {
 
                 }
             }
-
+            // console.log(bounds);
             map.fitBounds(bounds);
         }
 
@@ -136,6 +154,11 @@ function loginFunction() {
                 let username = sessionStorage.setItem('username', msg.username)
                 sessionStorage.setItem('access', msg.admin)
                 sessionStorage.setItem('accID', msg.id)
+                if (sessionStorage.getItem('access') === '1') {
+                    $('.uploadButton').css('display', 'block')
+                } else {
+                    $('.uploadButton').css('display', 'none')
+                }
                 document.getElementById('loggedInAs').innerHTML += username
                 var navLogged = document.getElementById('navLogged')
 
@@ -490,7 +513,6 @@ function payment() {
         contentType: "application/json; charset=utf-8",
         async: true,
         success: function(response) {
-            console.log(response);
             cardChecker(response)
         },
         error: function(xhr, status, error) {
@@ -552,25 +574,32 @@ $(document).ready(function() {
 
     $("#but_upload").click(function() {
 
-        var fd = new FormData();
-        var files = $('#file')[0].files;
+        var element = document.getElementById('file');
+        if (element.value) {
+            var image = element.files[0];
+            var blob = image.slice(0, image.size);
+            newFile = new File([blob], `${document.getElementById('accomID').value}`, { type: `${image.type}` });
 
-        // Check file selected or not
-        if (files.length > 0) {
-            fd.append('file', files[0]);
+            const formData = new FormData();
+            formData.append("file", newFile);
+
+            for (const pair of formData.entries()) {
+                console.log(`${pair[0]}, ${pair[1]}`);
+            }
+            // fd.append('file', filesCheck);
 
             $.ajax({
                 url: '/uploadImage',
-                type: 'post',
-                data: fd,
+                type: 'POST',
+                data: formData,
                 contentType: false,
                 processData: false,
                 success: function(response) {
 
                     if (response != 0) {
-                        $("#imgPreview").attr("src", response.imagePath);
-                        $("#imgPreview").css("display", 'block');
-                        $(".preview img").show(); // Display image element
+                        showError('alertSuccess', 'File uploaded successfully')
+
+                        // Display image element
                     } else {
                         alert('file not uploaded');
                     }
@@ -656,6 +685,13 @@ window.onload = function() {
         document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
         document.getElementById('navNotLogged').style.display = 'none'
         document.getElementById('navLogged').style.display = 'block'
+        if (sessionStorage.getItem('access') === '1') {
+            $('.uploadButton').css('display', 'block');
+            $('#mainModal').append('<div class="modalAdmin"> Welcome Admin! Lalalal</div>')
+
+        } else {
+            $('.uploadButton').css('display', 'none')
+        }
     }
 
 };

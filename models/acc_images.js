@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     acc_images.init({
-        accID: {
+        accomID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -38,9 +38,9 @@ module.exports = (sequelize, DataTypes) => {
 
     acc_images.associate = (models) => {
 
-        acc_images.belongsTo(models.acc_users, {
-            as: "users",
-            foreignKey: "accID"
+        acc_images.belongsTo(models.accommodation, {
+            as: "accommodation",
+            foreignKey: "accomID"
 
         })
     }

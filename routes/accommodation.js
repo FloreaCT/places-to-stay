@@ -23,6 +23,7 @@ module.exports = {
                 })
 
             } else if (req.params.typeOfAccommodation === "Any") {
+
                 models.accommodation.findAll({
                     where: {
                         [Op.or]: [
@@ -59,11 +60,11 @@ module.exports = {
         })
 
         router.get("/accDetails/:accomID", locationController.accDetails)
+        router.get("/images/:id", imageController.retrieveImages)
         router.post("/availability/:accomID", locationController.availability)
         router.post("/availability/:accomID/:date", locationController.availableSpace)
         router.post("/checkCreditCard", paymentController.checkCreditCard)
         router.post("/book", locationController.book)
-
         router.post("/uploadImage", imageController.upload.single('file'), imageController.image)
 
         return app.use("/", router)

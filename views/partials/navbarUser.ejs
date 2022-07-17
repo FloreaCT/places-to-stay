@@ -1,5 +1,4 @@
 <header role="banner">
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-gray shadow-sm">
         <div class="logo">
             <a href="#">
@@ -124,7 +123,7 @@
 
 </div>
 <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document" id="mainModal">
         <div class="modal-booking">
             <div class="modal-header">
                 <div class="centerSmall" id="accTitle"></div>
@@ -132,15 +131,9 @@
             </div>
             <div id="accMainPage">
                 <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators"><button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner carouselBig" id="carouselInner">
-                        <div class="carousel-item active"><img src="images/hotel1/115924081.jpg" class="d-block w-100 carouselBigImg" alt="..."> </div>
-                        <div class="carousel-item"> <img src="images/hotel1/118858836.jpg" class="d-block w-100 carouselBigImg" alt="..."></div>
-                        <div class="carousel-item"><img src="images/hotel1/157777411.jpg" class="d-block w-100 carouselBigImg" alt="..."></div>
-                    </div><button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                    <div class="carousel-indicators" id="indicatorsBig"></div>
+                    <div class="carousel-inner carouselBig" id="carouselInner"></div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
                     <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="visually-hidden">Next</span></button>
@@ -153,6 +146,7 @@
                         <div id="offers">
                             <h2>What this place offers</h2>
                         </div>
+                        <br>
                         <div id="amenities" style="text-align: center">
                             <div><i class="fa-solid fa-wifi"></i> Wifi</div>
                             <div><i class="fa-regular fa-snowflake"></i> Air Conditioning</div>
@@ -177,13 +171,29 @@
                         <div class="alert alert-danger" id="bookError" style="display: none">
                         </div><br>
                         <input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick="bookAccommodation()">
+                        <br>
+                        <!-- Upload image button -->
+
+                        <div id="uploadButton" class="uploadButton">
+                            <h4>Image upload </h4>
+                            <form method="post" action="" enctype="multipart/form-data" id="myform">
+                                <div id="alert alert-success" id="alertSuccess" style="display: none">
+                                </div>
+                                <input type="file" id="file" name="file" accept="image/*" />
+                                <input type="button" class="button" value="Upload" id="but_upload">
+
+                            </form>
+                        </div>
                     </div>
+
 
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
 
 
 </form>

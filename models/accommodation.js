@@ -88,6 +88,12 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'accID',
                 onDelete: 'cascade',
                 onUpdate: 'cascade'
+            }),
+            accommodation.hasMany(models.acc_images, {
+                as: 'acc_images',
+                foreignKey: 'accomID',
+                onDelete: 'cascade',
+                onUpdate: 'cascade'
             })
     }
 
