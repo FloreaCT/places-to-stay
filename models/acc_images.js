@@ -21,13 +21,17 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
+        approved: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         imagePath: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
-        },
+        }
     }, {
         sequelize,
         modelName: 'acc_images',

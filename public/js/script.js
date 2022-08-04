@@ -37,19 +37,28 @@ async function ajaxSearch(accommodation, accType) {
                 var imagesForCarousel = ""
                 var buttonsForCarousel = ""
                 var active = 'active'
+                counter = 0
 
                 for (j in imagePath) {
                     if (active === 'active') {
                         imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>`
                         active = ""
-                    } else { imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>` }
+                    } else if (imagePath[j].approved === 0) {
+                        continue
+                    } else {
+                        imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>`
+                    }
                 }
 
                 for (s in imagePath) {
-                    buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${1-s}" class="active" aria-current="true" aria-label="Slide ${s+1}"></button>`
+                    if (imagePath[s].approved === 0) {
+                        continue
+                    } else {
+                        buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${s+1}"></button>`
+                        counter += 1;
+                    }
                 }
 
-                console.log(results[i].id);
                 if (results[i].type === accType || accType === "Any") {
                     // results[i].type
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
@@ -63,6 +72,8 @@ async function ajaxSearch(accommodation, accType) {
                 }
             }
             // console.log(bounds);
+            // var featureGroup = L.featureGroup().addTo(map);
+            // map.fitBounds(featureGroup.getBounds());
             map.fitBounds(bounds);
         }
 
@@ -154,23 +165,25 @@ function loginFunction() {
                 let username = sessionStorage.setItem('username', msg.username)
                 sessionStorage.setItem('access', msg.admin)
                 sessionStorage.setItem('accID', msg.id)
-                if (sessionStorage.getItem('access') === '1') {
+                if (sessionStorage.getItem('access') === '1' || sessionStorage.getItem('access') === '0') {
                     $('.uploadButton').css('display', 'block')
                 } else {
                     $('.uploadButton').css('display', 'none')
                 }
                 document.getElementById('loggedInAs').innerHTML += username
                 var navLogged = document.getElementById('navLogged')
+                showError('loginSuccess', 'Login Succesful')
+                setTimeout(function() {
+                    $('#loginModal').modal('hide');
+                }, 1000);
 
-                $('.modal').modal('hide')
+
+
 
                 $("#navNotLogged").fadeOut(2000).promise().done(function() {
                     document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
                     navLogged.style.display = 'block';
                 })
-
-
-
 
             }
 
@@ -189,6 +202,8 @@ function logout() {
     $("#navLogged").fadeOut(2000).promise().done(function() {
         navNotLogged.style.display = 'block'
     })
+
+    $('.uploadButton').css('display', 'none')
 
     const url = "/logout"
 
@@ -514,6 +529,12 @@ function payment() {
         async: true,
         success: function(response) {
             cardChecker(response)
+            setTimeout(function() {
+                $('#creditCard').modal('hide');
+                $('#bookModal').modal('hide');
+                map.setView([latit, longit], 16)
+            }, 1000);
+
         },
         error: function(xhr, status, error) {
             alert("An error occured during booking, your account was not debited. Please contact the Administrator!", error);
@@ -597,11 +618,11 @@ $(document).ready(function() {
                 success: function(response) {
 
                     if (response != 0) {
-                        showError('alertSuccess', 'File uploaded successfully')
-
+                        document.getElementById('file').value = "";
+                        showError('alertSuccess', 'File uploaded successfully. It will be displayed after an Admin approves it.');
                         // Display image element
                     } else {
-                        alert('file not uploaded');
+                        alert('File not uploaded');
                     }
                 },
                 error: function(response) {

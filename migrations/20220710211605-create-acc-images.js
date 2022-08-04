@@ -15,6 +15,10 @@ module.exports = {
                     notEmpty: true
                 }
             },
+            appoved: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+            },
             imagePath: {
                 type: Sequelize.STRING,
                 allowNull: false,

@@ -1,3 +1,40 @@
+.navRight {
+    margin-left: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: right;
+}
+
+.fa-disabled {
+    opacity: 0.6;
+    background-color: grey;
+    cursor: not-allowed;
+}
+
+
+/* DROP DOWN ARROW */
+
+.cselect select {
+    apperance: none
+}
+
+.cselect::after {
+    content: "\25b6"
+}
+
+.cselect {
+    position: relative
+}
+
+.cselect::after {
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+
+/* END DROP DOWN */
+
 .bottom-booking {
     width: 100%;
     text-align: center;
@@ -128,13 +165,14 @@ input[type=number] {
     border: 1px solid #444;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
-    right: 0;
+    left: 0;
     width: 15%;
     padding: 10px;
     text-align: center;
     padding-bottom: 20px;
     top: 110%;
     z-index: 1041;
+    border-radius: 5px
 }
 
 #alertMap {
@@ -155,9 +193,12 @@ input[type=number] {
 /* For the big carousel */
 
 .carouselBigImg {
-    height: 30vh;
-    width: 15vw;
+    height: 50vh;
+    width: 100vw;
     border-radius: 15px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .carousel-inner.carouselBig {
@@ -264,7 +305,7 @@ input[type=number] {
 .logo:first-child {
     display: inline-block;
     vertical-align: top;
-    margin: 10px 0 0 10px;
+    padding-left: 45%;
 }
 
 .centerSmall {
@@ -304,6 +345,7 @@ input[type=number] {
     margin-top: 5px;
     height: 50%;
     margin-bottom: -30px;
+    border-radius: 5px;
 }
 
 .leaflet-popup-content {

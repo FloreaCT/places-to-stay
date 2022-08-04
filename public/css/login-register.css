@@ -199,19 +199,26 @@
 }
 
 .login .social .facebook {
-    background-color: #455CA8;
+    /* background-color: #455CA8;*/
+    cursor: default;
+    background-color: grey;
     color: #FFFFFF;
 }
 
 .login .social .google {
-    background-color: #F74933;
+    /* background-color: #F74933; */
+    cursor: default;
+    background-color: grey;
 }
 
 .login .social .github {
-    background-color: #403A3A;
+    /* background-color: #403A3A; */
+    cursor: default;
+    background-color: grey;
 }
 
-.login .facebook:hover {
+
+/* .login .facebook:hover {
     background-color: #6E83CD;
 }
 
@@ -222,7 +229,7 @@
 .login .github:hover {
     background-color: #4D4D4d;
     ;
-}
+} */
 
 .login .forgot {
     color: #797979;
@@ -300,6 +307,8 @@
     padding: 16px 60px;
     text-transform: uppercase;
     transition: all 0.3s ease 0s;
+    float: right;
+    margin-left: 10px;
 }
 
 .big-login:hover {

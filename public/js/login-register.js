@@ -83,6 +83,7 @@ function openLoginModal() {
     showLoginForm();
     setTimeout(function() {
         $('#loginModal').modal('show');
+        $('body').children('.modal-backdrop').eq(1).css('z-index', '1060')
     }, 230);
 
 }
@@ -110,18 +111,29 @@ async function showBookModal(results) {
     const images = await fetch(`/images/${results.id}`)
     const imagePath = await images.json()
     active = 'active'
+    counter = 0
 
     var imagesForCarousel = ""
     var buttonsForCarousel = ""
+
     for (i in imagePath) {
         if (active === 'active') {
             imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[i].imagePath}" class="d-block w-100 carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
             active = ""
-        } else { imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[i].imagePath}" class="d-block w-100 carouselBigImg" alt="${imagePath[i].imagePath}"> </div>` }
+        } else if (imagePath[i].approved === 0) {
+            continue
+        } else {
+            imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[i].imagePath}" class="d-block w-100 carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
+        }
     }
 
     for (i in imagePath) {
-        buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${1-i}" class="active" aria-current="true" aria-label="Slide ${i+1}"></button>`
+        if (imagePath[i].approved === 0) {
+            continue
+        } else {
+            buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${i+1}"></button>`
+            counter += 1;
+        }
     }
 
     $('#carouselInner').html(imagesForCarousel)

@@ -1,12 +1,12 @@
 <header role="banner">
     <nav class="navbar navbar-expand-lg navbar-dark bg-gray shadow-sm">
         <div class="logo">
-            <a href="#">
+            <a href="/">
                 <!-- Logo Image -->
-                <img src="images/logo.PNG" width="80" alt="" class="d-inline-block align-middle mr-2">
+                <img src="images/logo.PNG" width="100" alt="" class="d-inline-block align-middle mr-2">
             </a>
         </div>
-        <div class="centerSmall" id="navLogged" style="display: none">
+        <div class="navRight" id="navLogged" style="display: none">
             <div class="btn big-user" data-toggle="modal" id="loggedInAs">
             </div>
             <!-- <form method="post" action="/logout" class="formLogout"> -->
@@ -16,18 +16,13 @@
         </div>
 
 
-        <div class="container" id="navNotLogged" style="display: block">
-            <div class="row">
-                <div class="centerSmall">
-                    <a class="btn big-login" data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal();">Log in</a>
-                    <a class="btn big-register" data-toggle="modal" href="javascript:void(0)" onclick="openRegisterModal();">Register</a>
-                </div>
-            </div>
+        <div class="navRight" id="navNotLogged" style="display: block">
 
-
-
+            <a class="btn big-register" data-toggle="modal" href="javascript:void(0)" onclick="openRegisterModal();">Register</a>
+            <a class="btn big-login" data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal();">Log in</a>
 
         </div>
+
         <div class="search">
             <form>
                 <div class="form-group">
@@ -83,6 +78,7 @@
                             <input id="loginPassword" class="form-control" type="password" placeholder="Password" name="loginPassword" minlength="4" required>
                             <input class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction()">
                             <div class="alert-danger" id="loginError" style="display: none"></div>
+                            <div class="alert-success" id="loginSuccess" style="display: none"></div>
 
                         </div>
                     </div>
@@ -177,7 +173,7 @@
                         <div id="uploadButton" class="uploadButton">
                             <h4>Image upload </h4>
                             <form method="post" action="" enctype="multipart/form-data" id="myform">
-                                <div id="alert alert-success" id="alertSuccess" style="display: none">
+                                <div class="alert alert-success" id="alertSuccess" style="display: none">
                                 </div>
                                 <input type="file" id="file" name="file" accept="image/*" />
                                 <input type="button" class="button" value="Upload" id="but_upload">
