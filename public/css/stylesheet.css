@@ -5,10 +5,23 @@
     text-align: right;
 }
 
+select {
+    background-image: linear-gradient(45deg, transparent 50%, #0d6efd 60%), linear-gradient(135deg, #0d6efd 40%, transparent 50%) !important;
+    background-position: calc(100% - 30px) 14px, calc(100% - 20px) 14px, 100% 0;
+    background-size: 10px 10px, 10px 10px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
 .fa-disabled {
     opacity: 0.6;
     background-color: grey;
     cursor: not-allowed;
+}
+
+#datepicker .ui-datepicker-inline {
+    margin: auto;
 }
 
 
@@ -38,6 +51,7 @@
 .bottom-booking {
     width: 100%;
     text-align: center;
+    flex: 50%;
 }
 
 .uploadButton {
@@ -193,7 +207,7 @@ input[type=number] {
 /* For the big carousel */
 
 .carouselBigImg {
-    height: 50vh;
+    height: 45vh;
     width: 100vw;
     border-radius: 15px;
     max-width: 100%;
@@ -211,12 +225,25 @@ input[type=number] {
 
 /* Modal inside the carousel */
 
+.accMainPage {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* #mainCarousel {
+    flex: 100%;
+} */
+
 .modal-booking {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 99%;
+    height: 95vh;
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
@@ -243,13 +270,14 @@ input[type=number] {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230d6efd'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")!important;
 }
 
-#mainCarousel .carousel-control-next {
+
+/* #mainCarousel .carousel-control-next {
     right: 10%
 }
 
 #mainCarousel .carousel-control-prev {
     left: 10%
-}
+} */
 
 
 /* END CAROUSEL CUSTOMIZATION */

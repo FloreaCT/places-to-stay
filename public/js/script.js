@@ -18,7 +18,7 @@ async function ajaxSearch(accommodation, accType) {
 
         bounds = []
 
-        if (results.length === 0) {
+        if (Object.keys(results).length === 0) {
 
             showError("alertMap", "No accommodation found!")
 
@@ -84,10 +84,10 @@ async function ajaxSearch(accommodation, accType) {
     }
 }
 
-function bookAccommodation() {
+async function bookAccommodation() {
 
     if (!sessionStorage.getItem('username')) {
-
+        const unauthorized = await fetch('/unauthorized');
         showError('loginError', 'Sorry, you need to be logged in order to book.')
         openLoginModal()
 
@@ -498,7 +498,7 @@ function showError(elementId, text) {
     var element = document.getElementById(elementId)
     element.style.display = 'block'
     element.innerHTML = text
-    $("#" + elementId).delay(1000).fadeOut(1200)
+    $("#" + elementId).delay(5000).fadeOut(1200)
 }
 
 function payment() {

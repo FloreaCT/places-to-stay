@@ -19,7 +19,11 @@ module.exports = {
 
             if (req.params.location === 'all') {
                 models.accommodation.findAll().then((results) => {
-                    res.json(results)
+                    if (results.length === 0) {
+                        res.status(404).json({})
+                    } else {
+                        res.json(results)
+                    }
                 })
 
             } else if (req.params.typeOfAccommodation === "Any") {
@@ -36,7 +40,12 @@ module.exports = {
                         ],
                     }
                 }).then((results) => {
-                    res.json(results);
+                    if (results.length === 0) {
+                        res.status(404).json({});
+                    } else {
+                        res.json(results)
+                    }
+
                 })
             } else {
                 models.accommodation.findAll({
@@ -53,7 +62,11 @@ module.exports = {
 
                     }
                 }).then((results) => {
-                    res.json(results);
+                    if (results.length === 0) {
+                        res.status(404).json({});
+                    } else {
+                        res.json(results)
+                    }
                 })
             }
 

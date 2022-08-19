@@ -125,7 +125,7 @@
                 <div class="centerSmall" id="accTitle"></div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div id="accMainPage">
+            <div id="accMainPage" class="accMainPage">
                 <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators" id="indicatorsBig"></div>
                     <div class="carousel-inner carouselBig" id="carouselInner"></div>
@@ -137,8 +137,8 @@
                 <div id="accDetails" class="centerSmall">
 
                 </div>
-                <div id='bottom' class="d-flex p-3" style="width: auto;height:auto">
-                    <div id="left" class="bottom-booking">
+
+                <!-- <div id="left" class="bottom-booking">
                         <div id="offers">
                             <h2>What this place offers</h2>
                         </div>
@@ -151,38 +151,35 @@
                             <div><i class="fa-solid fa-pump-soap"></i> Toiletries</div>
                             <div><i class="fa-solid fa-paw"></i> Animals</div>
                         </div>
+                    </div> -->
+                <div id="bottom-left" class="bottom-booking">
+                    <div type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" id="forMaxPeople" value="">
                     </div>
-                    <div id="middle" class="w-33">
-                        <div type="text" name="datepicker" id="datepicker" placeholder="Pick a date" autocomplete="off" onchange=availableSpace() readonly="readonly"><input type="hidden" id="forMaxPeople" value="">
-                        </div>
-                    </div>
-                    <div id="right" class="bottom-booking">
-                        <div class="container hidden" id="maxPeople" style="font-size: 1.5rem; color: green;"></div>
-                        <span>Number of persons</span>
-                        <form class="incDec">
-                            <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                            <input type="number" class="number" id="npeople" value="0" />
-                            <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                </div>
+                <div id="bottom-right" class="bottom-booking">
+                    <div class="container hidden" id="maxPeople" style="font-size: 1.5rem; color: green;"></div>
+                    <span>Number of persons</span>
+                    <form class="incDec">
+                        <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                        <input type="number" class="number" id="npeople" value="0" />
+                        <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                    </form>
+                    <div class="alert alert-danger" id="bookError" style="display: none">
+                    </div><br>
+                    <input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick="bookAccommodation()">
+                    <br>
+                    <!-- Upload image button -->
+
+                    <div id="uploadButton" class="uploadButton">
+                        <h4>Image upload </h4>
+                        <form method="post" action="" enctype="multipart/form-data" id="myform">
+                            <div class="alert alert-success" id="alertSuccess" style="display: none">
+                            </div>
+                            <input type="file" id="file" name="file" accept="image/*" />
+                            <input type="button" class="button" value="Upload" id="but_upload">
+
                         </form>
-                        <div class="alert alert-danger" id="bookError" style="display: none">
-                        </div><br>
-                        <input class="btn btn-primary" type="text" value="Book" id="send_booking" onclick="bookAccommodation()">
-                        <br>
-                        <!-- Upload image button -->
-
-                        <div id="uploadButton" class="uploadButton">
-                            <h4>Image upload </h4>
-                            <form method="post" action="" enctype="multipart/form-data" id="myform">
-                                <div class="alert alert-success" id="alertSuccess" style="display: none">
-                                </div>
-                                <input type="file" id="file" name="file" accept="image/*" />
-                                <input type="button" class="button" value="Upload" id="but_upload">
-
-                            </form>
-                        </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

@@ -118,12 +118,12 @@ async function showBookModal(results) {
 
     for (i in imagePath) {
         if (active === 'active') {
-            imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[i].imagePath}" class="d-block w-100 carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
+            imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[i].imagePath}" class="carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
             active = ""
         } else if (imagePath[i].approved === 0) {
             continue
         } else {
-            imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[i].imagePath}" class="d-block w-100 carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
+            imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[i].imagePath}" class="carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
         }
     }
 

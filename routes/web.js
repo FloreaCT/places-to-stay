@@ -29,11 +29,15 @@ module.exports = {
             })
         })
 
-        router.get("*", function(req, res) {
-            const results = locationController.findAllAccommodations;
-            const isAuth = req.isAuthenticated()
-            res.status(404).render('index.ejs', { isAuth: isAuth, results: results });
-        });
+
+        router.get('/unauthorized', function(req, res) {
+                res.sendStatus(401)
+            })
+            // app.use(function(req, res, next) {
+            //     res.locals.success_messages = req.flash('success_messages');
+            //     res.locals.error_messages = req.flash('error_messages');
+            //     next();
+            // });
 
         router.post("/login", function(req, res, next) {
             passport.authenticate('local', {
@@ -71,15 +75,11 @@ module.exports = {
 
         router.post('/logout', authController.postLogOut)
 
-
-
-
-
-        // app.use(function(req, res, next) {
-        //     res.locals.success_messages = req.flash('success_messages');
-        //     res.locals.error_messages = req.flash('error_messages');
-        //     next();
-        // });
+        router.get("*", function(req, res) {
+            const results = locationController.findAllAccommodations;
+            const isAuth = req.isAuthenticated()
+            res.status(404).render('404.ejs', { isAuth: isAuth, results: results });
+        });
 
         return app.use("/", router)
     }

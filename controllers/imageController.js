@@ -31,6 +31,21 @@ const image = async(req, res) => {
             accomID: req.file.originalname,
             imagePath: imgName
         }).then((results) => {
+            // models.acc_images.findOne({
+            //     where: {
+            //         accomID: req.file.originalname,
+            //         imagePath: "/images/nophoto.jpg"
+            //     }
+            // }).then((results) => {
+            //     if (results) {
+            //         models.acc_images.destroy({
+            //             where: {
+            //                 accomID: req.file.originalname,
+            //                 imagePath: "/images/nophoto.jpg"
+            //             }
+            //         })
+            //     }
+            // })
             res.send(results)
         })
 
