@@ -19,8 +19,6 @@ app.use(cors());
 // Configuring server for cookies
 app.use(cookieParser('secret'))
 
-// Showing the meessage to the user
-
 // Configuring body-parser for post
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

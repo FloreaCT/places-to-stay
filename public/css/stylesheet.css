@@ -1,3 +1,12 @@
+.btn.btn-primary,
+.btn.btn-primary:focus,
+.btn.btn-primary:active,
+.btn-primary.active {
+    background-color: #00bbff;
+    border-color: #00bbff;
+    box-shadow: none;
+}
+
 .navRight {
     margin-left: auto;
     width: 100%;
@@ -28,7 +37,7 @@ select {
 /* DROP DOWN ARROW */
 
 .cselect select {
-    apperance: none
+    appearance: none
 }
 
 .cselect::after {
@@ -334,6 +343,12 @@ input[type=number] {
     display: inline-block;
     vertical-align: top;
     padding-left: 45%;
+}
+
+@media screen and (max-width: 1130px) {
+    .logo:first-child {
+        left: -45%;
+    }
 }
 
 .centerSmall {
@@ -685,7 +700,7 @@ Main components
 
 header[role=banner] {
     position: relative;
-    height: 50px;
+    height: 80px;
     background: #343642;
     z-index: 1039;
 }
@@ -718,9 +733,6 @@ header[role=banner]::after {
 }
 
 @media only screen and (min-width: 768px) {
-    header[role=banner] {
-        height: 80px;
-    }
     header[role=banner] #cd-logo {
         margin: 20px 0 0 5%;
         -webkit-transform: scale(1);

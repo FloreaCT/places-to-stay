@@ -4,7 +4,7 @@ require('dotenv').config()
 
 let checkLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
-        return res.redirect('/404.ejs')
+        return res.sendStatus(401)
     }
     next()
 }
@@ -39,7 +39,6 @@ let register = async(req, res) => {
 
 
 }
-
 
 // let sendEmail = function(email, token) {
 

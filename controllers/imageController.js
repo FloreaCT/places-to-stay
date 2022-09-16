@@ -29,23 +29,24 @@ const image = async(req, res) => {
         var imgName = '/images/uploadedImages/' + req.file.originalname + '/' + req.file.filename;
         await models.acc_images.create({
             accomID: req.file.originalname,
-            imagePath: imgName
+            imagePath: imgName,
+            approved: 1
         }).then((results) => {
-            // models.acc_images.findOne({
-            //     where: {
-            //         accomID: req.file.originalname,
-            //         imagePath: "/images/nophoto.jpg"
-            //     }
-            // }).then((results) => {
-            //     if (results) {
-            //         models.acc_images.destroy({
-            //             where: {
-            //                 accomID: req.file.originalname,
-            //                 imagePath: "/images/nophoto.jpg"
-            //             }
-            //         })
-            //     }
-            // })
+            models.acc_images.findOne({
+                where: {
+                    accomID: req.file.originalname,
+                    imagePath: "/images/nophoto.jpg"
+                }
+            }).then((results) => {
+                if (results) {
+                    models.acc_images.destroy({
+                        where: {
+                            accomID: req.file.originalname,
+                            imagePath: "/images/nophoto.jpg"
+                        }
+                    })
+                }
+            })
             res.send(results)
         })
 

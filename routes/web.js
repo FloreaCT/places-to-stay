@@ -29,9 +29,8 @@ module.exports = {
             })
         })
 
-
-        router.get('/unauthorized', function(req, res) {
-                res.sendStatus(401)
+        router.get('/unauthorized', authController.checkLoggedIn, function(req, res) {
+                return res.sendStatus(200)
             })
             // app.use(function(req, res, next) {
             //     res.locals.success_messages = req.flash('success_messages');

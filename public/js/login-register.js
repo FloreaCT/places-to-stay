@@ -24,8 +24,17 @@ function showLoginForm() {
         $('.register-footer').fadeOut('fast', function() {
             $('.login-footer').fadeIn('fast');
         });
-
         $('.modal-title').html('Login with');
+        $("#loginPassword").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $("#loginButton").click();
+            }
+        });
+        $("#loginUser").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $("#loginButton").click();
+            }
+        });
     });
     $('.error').removeClass('alert alert-danger').html('');
 }
@@ -116,23 +125,30 @@ async function showBookModal(results) {
     var imagesForCarousel = ""
     var buttonsForCarousel = ""
 
-    for (i in imagePath) {
-        if (active === 'active') {
-            imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[i].imagePath}" class="carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
-            active = ""
-        } else if (imagePath[i].approved === 0) {
-            continue
-        } else {
-            imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[i].imagePath}" class="carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
-        }
-    }
+    if (imagePath.length === 0) {
+        console.log('Setting no photo');
+        imagesForCarousel += `<div class="carousel-item active"><img src="/images/nophoto.jpg" class="d-block w-100 carouselImg" alt="/images/nophoto.jpg"> </div>`
+        buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${s+1}"></button>`
+    } else {
 
-    for (i in imagePath) {
-        if (imagePath[i].approved === 0) {
-            continue
-        } else {
-            buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${i+1}"></button>`
-            counter += 1;
+        for (i in imagePath) {
+            if (active === 'active') {
+                imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[i].imagePath}" class="carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
+                active = ""
+            } else if (imagePath[i].approved === 0) {
+                continue
+            } else {
+                imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[i].imagePath}" class="carouselBigImg" alt="${imagePath[i].imagePath}"> </div>`
+            }
+        }
+
+        for (i in imagePath) {
+            if (imagePath[i].approved === 0) {
+                continue
+            } else {
+                buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${i+1}"></button>`
+                counter += 1;
+            }
         }
     }
 

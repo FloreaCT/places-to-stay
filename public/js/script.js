@@ -39,26 +39,32 @@ async function ajaxSearch(accommodation, accType) {
                 var active = 'active'
                 counter = 0
 
-                for (j in imagePath) {
-                    if (active === 'active') {
-                        imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>`
-                        active = ""
-                    } else if (imagePath[j].approved === 0) {
-                        continue
-                    } else {
-                        imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>`
+                if (imagePath.length === 0) {
+                    console.log('Setting no photo');
+                    imagesForCarousel += `<div class="carousel-item active"><img src="/images/nophoto.jpg" class="d-block w-100 carouselImg" alt="/images/nophoto.jpg"> </div>`
+                    buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${s+1}"></button>`
+                } else {
+
+                    for (j in imagePath) {
+                        if (active === 'active') {
+                            imagesForCarousel += `<div class="carousel-item ${active}"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>`
+                            active = ""
+                        } else if (imagePath[j].approved === 0) {
+                            continue
+                        } else {
+                            imagesForCarousel += `<div class="carousel-item"><img src="${imagePath[j].imagePath}" class="d-block w-100 carouselImg" alt="${imagePath[j].imagePath}"> </div>`
+                        }
+                    }
+
+                    for (s in imagePath) {
+                        if (imagePath[s].approved === 0) {
+                            continue
+                        } else {
+                            buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${s+1}"></button>`
+                            counter += 1;
+                        }
                     }
                 }
-
-                for (s in imagePath) {
-                    if (imagePath[s].approved === 0) {
-                        continue
-                    } else {
-                        buttonsForCarousel += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${counter}" class="active" aria-current="true" aria-label="Slide ${s+1}"></button>`
-                        counter += 1;
-                    }
-                }
-
                 if (results[i].type === accType || accType === "Any") {
                     // results[i].type
                     var mark = L.marker([results[i].latitude, results[i].longitude]).addTo(layerGroup)
@@ -86,8 +92,9 @@ async function ajaxSearch(accommodation, accType) {
 
 async function bookAccommodation() {
 
-    if (!sessionStorage.getItem('username')) {
-        const unauthorized = await fetch('/unauthorized');
+    const unauthorized = await fetch('/unauthorized');
+
+    if (unauthorized.status === 401) {
         showError('loginError', 'Sorry, you need to be logged in order to book.')
         openLoginModal()
 
@@ -98,7 +105,6 @@ async function bookAccommodation() {
 
         const accomID = document.getElementById("accomID").value
         const begin_at = document.getElementById("datepicker").value
-        const npeople = document.getElementById("npeople").value
 
         if (accomID.length === 0) {
 
@@ -116,7 +122,6 @@ async function bookAccommodation() {
                 $('.modal-backdrop').css('z-index', '1059');
             });
         }
-
 
     }
 }
@@ -176,9 +181,6 @@ function loginFunction() {
                 setTimeout(function() {
                     $('#loginModal').modal('hide');
                 }, 1000);
-
-
-
 
                 $("#navNotLogged").fadeOut(2000).promise().done(function() {
                     document.getElementById('loggedInAs').innerHTML = 'You are logged in as ' + sessionStorage.getItem('username')
@@ -619,11 +621,15 @@ $(document).ready(function() {
 
                     if (response != 0) {
                         document.getElementById('file').value = "";
-                        showError('alertSuccess', 'File uploaded successfully. It will be displayed after an Admin approves it.');
+                        showError('alertSuccess', 'File uploaded successfully.');
                         // Display image element
                     } else {
                         alert('File not uploaded');
                     }
+                    ajaxSearch('all', 'Any')
+                    setTimeout(function() {
+                        $('#bookModal').modal('hide')
+                    }, 2500);
                 },
                 error: function(response) {
 
