@@ -74,12 +74,9 @@ async function ajaxSearch(accommodation, accType) {
                     bounds.push([results[i].latitude, results[i].longitude])
                 } else {
 
-
                 }
             }
-            // console.log(bounds);
-            // var featureGroup = L.featureGroup().addTo(map);
-            // map.fitBounds(featureGroup.getBounds());
+
             map.fitBounds(bounds);
         }
 
