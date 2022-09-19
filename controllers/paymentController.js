@@ -1,10 +1,7 @@
-const models = require('../models')
 const valid = require("card-validator");
 const { book } = require('../controllers/locationController')
 
 const checkCreditCard = async function(req, res, next) {
-
-
 
     var ccNumber = valid.number(req.body[0].cardNumber)
     var ccHolder = valid.cardholderName(req.body[0].cardHolder)

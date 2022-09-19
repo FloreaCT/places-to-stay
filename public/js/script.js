@@ -93,7 +93,7 @@ async function ajaxSearch(accommodation, accType) {
 async function bookAccommodation() {
 
     const unauthorized = await fetch('/unauthorized');
-
+    // Check if user is authenticated
     if (unauthorized.status === 401) {
         showError('loginError', 'Sorry, you need to be logged in order to book.')
         openLoginModal()
@@ -105,17 +105,17 @@ async function bookAccommodation() {
 
         const accomID = document.getElementById("accomID").value
         const begin_at = document.getElementById("datepicker").value
-
+            // Check if the system automatically updated the accommodation ID
         if (accomID.length === 0) {
 
             showError("bookError", 'Invalid accommodation ID, please contact the administrator at admin@places-totstay.herokuapp.com')
-
+                // Check if the user selected a Date
         } else if (!begin_at) {
 
             showError("bookError", "Please select a date!")
 
         } else {
-
+            // Check if the user selected number of people
             validate()
             openCreditCard()
             $("#creditCard").on('hidden.bs.modal', function() {
@@ -530,12 +530,14 @@ function payment() {
         contentType: "application/json; charset=utf-8",
         async: true,
         success: function(response) {
-            cardChecker(response)
-            setTimeout(function() {
-                $('#creditCard').modal('hide');
-                $('#bookModal').modal('hide');
-                map.setView([latit, longit], 16)
-            }, 1000);
+            const cChecker = cardChecker(response)
+            if (cChecker) {
+                setTimeout(function() {
+                    $('#creditCard').modal('hide');
+                    $('#bookModal').modal('hide');
+                    map.setView([latit, longit], 16)
+                }, 1000)
+            }
 
         },
         error: function(xhr, status, error) {
@@ -629,7 +631,7 @@ $(document).ready(function() {
                     ajaxSearch('all', 'Any')
                     setTimeout(function() {
                         $('#bookModal').modal('hide')
-                    }, 2500);
+                    }, 200);
                 },
                 error: function(response) {
 

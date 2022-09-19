@@ -25,9 +25,10 @@ const book = async function(req, res, next) {
     const newTime = time.split('/').reverse().join('/').replace('/', "").replace('/', "").slice(2, 8);
 
     try {
-
+        // Start a sequelize transaction
         const result = await sequelize.transaction(async(t) => {
 
+            // 1st transaction decreases the number of persons for a given location
             await models.acc_dates.decrement({
                 availability: `${req.body[1].npeople}`
             }, {
@@ -36,12 +37,12 @@ const book = async function(req, res, next) {
                     thedate: newTime
                 }
             }, { transaction: t }).then(async(result) => {
-
+                // If previous transactions fails, roll back and dont proceed to last query
                 if (result[0][1] == 0) {
                     res.write('Something went wrong, please contact the administrator at admin@placestostay.co.uk')
                     res.end()
                 } else {
-
+                    // 2nd transcation creates the booking 
                     await models.acc_bookings.create({
                         accID: req.body[1].accID,
                         thedate: req.body[1].begin_at.replace(/\D/g, ''),

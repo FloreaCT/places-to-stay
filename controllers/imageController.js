@@ -1,12 +1,11 @@
 const multer = require('multer')
 const path = require('path')
-const db = require('../config/session')
 const models = require('../models')
 const fs = require('fs')
 
 var storage = multer.diskStorage({
     destination: (req, file, callBack) => {
-        const imagePath = `./public/images/uploadedImages/${file.originalname}`
+        const imagePath = `./public/images/uploadedImages/${file.originalname}` // originalname is the ID of the accommodation
         fs.mkdirSync(imagePath, { recursive: true })
         callBack(null, imagePath) // './public/images/uploadedImages/AccommodationID' directory name where to save the file
     },
@@ -25,7 +24,6 @@ const image = async(req, res) => {
     if (!req.file) {
         res.json({ 'nofile': 'No file uploaded' })
     } else {
-        const extension = req.file.mimetype.split('/')
         var imgName = '/images/uploadedImages/' + req.file.originalname + '/' + req.file.filename;
         await models.acc_images.create({
             accomID: req.file.originalname,

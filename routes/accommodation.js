@@ -16,37 +16,38 @@ module.exports = {
     initAllAccRoute(app) {
 
         router.get('/accommodation/:location/:typeOfAccommodation', (req, res) => {
-
+            // Look up for all the locations, if the user did not choose the location or the type
             if (req.params.location === 'all') {
                 models.accommodation.findAll().then((results) => {
-                    if (results.length === 0) {
-                        res.status(404).json({})
-                    } else {
-                        res.json(results)
-                    }
-                })
-
+                        if (results.length === 0) {
+                            res.status(404).json({})
+                        } else {
+                            res.json(results)
+                        }
+                    })
+                    // Look up for all the accommodations in a particular location, if the user did not choose the type
             } else if (req.params.typeOfAccommodation === "Any") {
 
                 models.accommodation.findAll({
-                    where: {
-                        [Op.or]: [
-                            Sequelize.where(Sequelize.fn("lower", Sequelize.col("county")), {
-                                [Op.like]: "%" + req.params.location + "%",
-                            }),
-                            Sequelize.where(Sequelize.fn("lower", Sequelize.col("city")), {
-                                [Op.like]: "%" + req.params.location + "%",
-                            })
-                        ],
-                    }
-                }).then((results) => {
-                    if (results.length === 0) {
-                        res.status(404).json({});
-                    } else {
-                        res.json(results)
-                    }
+                        where: {
+                            [Op.or]: [
+                                Sequelize.where(Sequelize.fn("lower", Sequelize.col("county")), {
+                                    [Op.like]: "%" + req.params.location + "%",
+                                }),
+                                Sequelize.where(Sequelize.fn("lower", Sequelize.col("city")), {
+                                    [Op.like]: "%" + req.params.location + "%",
+                                })
+                            ],
+                        }
+                    }).then((results) => {
+                        if (results.length === 0) {
+                            res.status(404).json({});
+                        } else {
+                            res.json(results)
+                        }
 
-                })
+                    })
+                    //Look up for all the accommodation in a particular location of a particular type
             } else {
                 models.accommodation.findAll({
                     where: {
