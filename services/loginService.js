@@ -1,26 +1,6 @@
 const db = require('../models')
 const bcrypt = require('bcrypt')
 
-// let handleLogin = (loginUser, password) => {
-//     return new Promise(async(resolve, reject) => {
-//         //Check if email exists or not
-
-//         let user = await findUserByUser(loginUser);
-//         if (user) {
-//             //Compare password
-//             await bcrypt.compare(password, user.password).then((isMatch) => {
-//                 if (isMatch) {
-//                     resolve(true);
-//                 } else {
-//                     reject(`The password that you've entered is incorrect`);
-//                 }
-//             });
-//         } else {
-//             reject(`This user email "${email}" doesn't exist`);
-//         }
-//     });
-// };
-
 let findUserByUser = (loginUser) => {
     return new Promise(async(resolve, reject) => {
         try {
@@ -54,21 +34,6 @@ let comparePassword = (password, userObject) => {
         }
     })
 }
-
-// let comparePassword = (password, userObject) => {
-//     return new Promise(async(resolve, reject) => {
-//         try {
-//             let isMatch = await bcrypt.compare(password, userObject.password)
-//             if (isMatch) {
-//                 resolve(true)
-//             } else {
-//                 resolve("The password that you have entered is incorrect!")
-//             }
-//         } catch (e) {
-//             reject(e)
-//         }
-//     })
-// }
 
 let findUserById = (idInput) => {
     return new Promise(async(resolve, reject) => {

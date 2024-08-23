@@ -24,17 +24,17 @@
         </div>
 
         <div class="search">
-            <form>
-                <div class="form-group">
 
-                    <input type="text" class="form-control" id="accommodationSearch" placeholder="Search destination" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <select class="form-control" id="typeOfAccommodation">
+            <div class="form-group">
+                <input type="text" class="form-control" id="accommodationSearch" placeholder="Search destination" autocomplete="no">
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" id="typeOfAccommodation">
                     <option value="Any">Type</option>
           </select>
-                </div>
-            </form>
+            </div>
+
             <input type='button' id='ajaxButton' value='Search!' class="btn btn-primary" /></select>
             <br><br>
 
@@ -74,24 +74,25 @@
                         </div>
                         <div class="error"></div>
                         <div class="form loginBox">
-                            <input id="loginUser" class="form-control" type="text" placeholder="Username" name="loginUser" minlength="3" required>
-                            <input id="loginPassword" class="form-control" type="password" placeholder="Password" name="loginPassword" minlength="4" required>
-                            <input id="loginButton" class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction()">
-                            <div class="alert-danger" id="loginError" style="display: none"></div>
-                            <div class="alert-success" id="loginSuccess" style="display: none"></div>
-
+                            <form>
+                                <input id="loginUser" class="form-control" type="text" placeholder="Username" name="loginUser" minlength="3" autocomplete="username" required>
+                                <input id="loginPassword" class="form-control" type="password" placeholder="Password" name="loginPassword" minlength="4" autocomplete="new-password" required>
+                                <input id="loginButton" class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction()">
+                                <div class="alert-danger" id="loginError" style="display: none"></div>
+                                <div class="alert-success" id="loginSuccess" style="display: none"></div>
+                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="box">
                     <div class="content registerBox" style="display:none;">
                         <div class="form" id="registerForm">
-
-                            <input id="registerUsername" class="form-control" type="text" placeholder="Username" name="username" required>
-                            <input id="registerPassword" class="form-control" type="password" placeholder="Password" name="password" required>
-                            <input id="passwordConfirmation" class="form-control" type="password" placeholder="Repeat Password" name="passwordConfirmation" required>
-                            <input class="btn btn-default btn-register" type="button" value="Create account" name="registerButton" onclick="register()">
-
+                            <form>
+                                <input id="registerUsername" class="form-control" type="text" placeholder="Username" name="username" autocomplete="username" required>
+                                <input id="registerPassword" class="form-control" type="password" placeholder="Password" name="password" autocomplete="new-password" required>
+                                <input id="passwordConfirmation" class="form-control" type="password" placeholder="Repeat Password" name="passwordConfirmation" autocomplete="new-password" required>
+                                <input class="btn btn-default btn-register" type="button" value="Create account" name="registerButton" onclick="register()">
+                            </form>
                             <div class="alert-danger" id="registerError" style="display: none"></div>
                             <div class="alert-success" id="registerSuccess" style="display: none"></div>
                         </div>
