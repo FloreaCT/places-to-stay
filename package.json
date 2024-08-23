@@ -1,44 +1,44 @@
 {
-    "name": "places-to-stay",
-    "version": "1.0.0",
-    "description": "University project for Web Application Development",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon app.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/FloreaCT/places-to-stay.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/FloreaCT/places-to-stay/issues"
-    },
-    "homepage": "https://github.com/FloreaCT/places-to-stay#readme",
-    "dependencies": {
-        "bcrypt": "^5.0.1",
-        "card-validator": "^8.1.1",
-        "connect-session-sequelize": "^7.1.4",
-        "cookie-parser": "^1.4.6",
-        "cors": "^2.8.5",
-        "dotenv": "^16.0.1",
-        "ejs": "^3.1.8",
-        "express": "^4.18.1",
-        "express-flash": "^0.0.2",
-        "express-openid-connect": "^2.7.3",
-        "express-session": "^1.17.3",
-        "express-validator": "^6.14.2",
-        "multer": "^1.4.5-lts.1",
-        "mysql2": "^2.3.3",
-        "nodejs": "^0.0.0",
-        "nodemailer": "^6.7.7",
-        "nodemon": "^2.0.18",
-        "passport": "^0.6.0",
-        "passport-local": "^1.0.0",
-        "rand-token": "^1.0.1",
-        "sequelize": "^6.21.2",
-        "sequelize-cli": "^6.4.1"
-    }
+  "name": "places-to-stay",
+  "version": "1.0.0",
+  "description": "University project for Web Application Development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FloreaCT/places-to-stay.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FloreaCT/places-to-stay/issues"
+  },
+  "homepage": "https://github.com/FloreaCT/places-to-stay#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "card-validator": "^8.1.1",
+    "connect-session-sequelize": "^7.1.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-flash": "^0.0.2",
+    "express-openid-connect": "^2.7.3",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^2.3.3",
+    "nodejs": "^0.0.0",
+    "nodemailer": "^6.7.7",
+    "nodemon": "^2.0.18",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "rand-token": "^1.0.1",
+    "sequelize": "^6.21.2",
+    "sequelize-cli": "^6.4.1"
+  }
 }
