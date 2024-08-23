@@ -39,6 +39,8 @@
     "passport-local": "^1.0.0",
     "rand-token": "^1.0.1",
     "sequelize": "^6.21.2",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "netlify-cli": "^17.4.0",
+    "serverless-http": "3.2.0"
   }
 }
