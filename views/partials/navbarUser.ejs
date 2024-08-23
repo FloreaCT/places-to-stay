@@ -77,7 +77,7 @@
                             <form>
                                 <input id="loginUser" class="form-control" type="text" placeholder="Username" name="loginUser" minlength="3" autocomplete="username" required>
                                 <input id="loginPassword" class="form-control" type="password" placeholder="Password" name="loginPassword" minlength="4" autocomplete="new-password" required>
-                                <input id="loginButton" class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction()">
+                                <input id="loginButton" class="btn btn-default btn-login" type="submit" value="Login" onclick="loginFunction(event)">
                                 <div class="alert-danger" id="loginError" style="display: none"></div>
                                 <div class="alert-success" id="loginSuccess" style="display: none"></div>
                             </form>
